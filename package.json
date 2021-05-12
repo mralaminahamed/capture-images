@@ -1,0 +1,69 @@
+{
+  "name": "capture-images",
+  "version": "0.4.0",
+  "description": "Capture all images from website page",
+  "scripts": {
+    "build": "webpack && rm ./dist-firefox/assets/js/manifest.json.js",
+    "build:chrome": "webpack --env.target=chrome && rm ./dist-chrome/assets/js/manifest.json.js",
+    "lint": "web-ext lint",
+    "package": "npm run update-version && npm run build && web-ext build --overwrite-dest -a dist-firefox-package",
+    "package:chrome": "npm run update-version && npm run build:chrome && web-ext build --overwrite-dest -s dist-chrome -a dist-chrome-package",
+    "start": "web-ext run",
+    "watch": "webpack -w",
+    "watch:chrome": "webpack -w --env.target=chrome",
+    "update-addon": "node ./src/utils/update-addon.js",
+    "update-version": "node ./src/utils/sync-app-version",
+    "zip-src": "node ./src/utils/zip-src"
+  },
+  "keywords": [
+    "images",
+    "capture",
+    "image download",
+    "capture images"
+  ],
+  "author": "Mr Abir Ahamed",
+  "license": "ISC",
+  "devDependencies": {
+    "autoprefixer": "^9.8.4",
+    "clean-webpack-plugin": "^3.0.0",
+    "copy-webpack-plugin": "^6.0.1",
+    "css-loader": "^3.5.3",
+    "desktop-screenshot": "^0.1.1",
+    "file-loader": "^6.0.0",
+    "handlebars": "^4.7.6",
+    "html-loader": "^1.1.0",
+    "html-webpack-plugin": "^4.3.0",
+    "html-webpack-tags-plugin": "^2.0.17",
+    "javascript-obfuscator": "^0.28.4",
+    "mini-css-extract-plugin": "^0.9.0",
+    "node-sass": "^4.14.1",
+    "obfuscator-loader": "^1.1.2",
+    "postcss-loader": "^3.0.0",
+    "sass-loader": "^8.0.2",
+    "semver-parser": "^3.0.5",
+    "style-loader": "^1.2.1",
+    "ts-loader": "^7.0.5",
+    "typescript": "^3.9.5",
+    "unused-files-webpack-plugin": "^3.4.0",
+    "web-ext-types": "^3.2.1",
+    "web-ext-webpack-plugin": "github:hiikezoe/web-ext-webpack-plugin",
+    "webextension-polyfill-ts": "^0.16.0",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.11",
+    "webpack-obfuscator": "^0.28.4",
+    "webpack-preprocessor": "^0.1.12",
+    "webpack-preprocessor-loader": "^1.1.2"
+  },
+  "webExt": {
+    "sourceDir": "dist-firefox"
+  },
+  "dependencies": {
+    "@types/jquery": "^3.3.38",
+    "archiver": "^4.0.1",
+    "html-webpack-include-assets-plugin": "^2.0.0",
+    "html2canvas": "^1.0.0-rc.5",
+    "jquery": "^3.5.1",
+    "web-ext": "^4.2.0",
+    "webrtc-adapter": "^7.6.1"
+  }
+}
