@@ -63,7 +63,7 @@
     "html-webpack-include-assets-plugin": "^2.0.0",
     "html2canvas": "^1.0.0-rc.5",
     "jquery": "^3.5.1",
-    "web-ext": "^4.2.0",
+    "web-ext": "^6.1.0",
     "webrtc-adapter": "^7.6.1"
   }
 }
