@@ -36,7 +36,6 @@
     "html-webpack-tags-plugin": "^2.0.17",
     "javascript-obfuscator": "^0.28.4",
     "mini-css-extract-plugin": "^0.9.0",
-    "node-sass": "^4.14.1",
     "obfuscator-loader": "^1.1.2",
     "postcss-loader": "^3.0.0",
     "sass-loader": "^8.0.2",
