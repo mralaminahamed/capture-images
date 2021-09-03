@@ -2,7 +2,6 @@ const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const WebExtWebpackPlugin = require('web-ext-webpack-plugin');
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
-const JavaScriptObfuscator = require('webpack-obfuscator');
 
 // Look for a --firefox <path> argument
 const firefoxIndex = process.argv.indexOf('--firefox');
@@ -122,9 +121,9 @@ const firefoxConfig = {
             firefox,
             firefoxProfile,
         }),
-        new JavaScriptObfuscator({
-            rotateStringArray: true
-        })
+        // new JavaScriptObfuscator({
+        //     rotateStringArray: true
+        // })
     ],
 };
 
@@ -177,9 +176,9 @@ const chromeConfig = {
     },
     plugins: [
         ...commonExtConfig.plugins,
-        new JavaScriptObfuscator({
-            rotateStringArray: true
-        })
+        // new JavaScriptObfuscator({
+        //     rotateStringArray: true
+        // })
     ],
 };
 

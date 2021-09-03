@@ -1,8 +1,8 @@
 /*
 * Capture Images
-* Developer: Mr Abir Ahamed
+* Developer: Al-Amin Ahamed
 * Website: https://www.mishusoft.com
-* Official Link: https://download.mishusoft.com/addons/captureimages
+* Official Link: https://github.com/mralaminahamed/capture-images
 * */
 
 

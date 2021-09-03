@@ -1,6 +1,6 @@
 /**
  * BrowserJS Library
- * Developer: Mr Abir Ahamed
+ * Developer: Al-Amin Ahamed
  * Website: https://www.mishusoft.com
  * Official Link: https://lib.mishusoft.com/browser/browserjs.js
  * */

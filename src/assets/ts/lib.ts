@@ -1,8 +1,8 @@
 /*
 * Capture Images
-* Developer: Mr Abir Ahamed
+* Developer: Al-Amin Ahamed
 * Website: https://www.mishusoft.com
-* Official Link: https://download.mishusoft.com/addons/captureimages
+* Official Link: https://github.com/mralaminahamed/capture-images
 * */
 
 'use strict';
@@ -50,9 +50,9 @@ export function createElement(node_data: any) {
     return (element as HTMLElement);
 }
 
-export function captureElementById(elementId: string): any {
-    if (document.querySelector('#' + elementId) !== null) {
-        return document.querySelector('#' + elementId) as HTMLElement;
+export function captureElement(selectors: string): any {
+    if (document.querySelector(selectors) !== null) {
+        return document.querySelector(selectors) as HTMLElement;
     }
 }
 

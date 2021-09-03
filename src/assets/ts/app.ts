@@ -1,16 +1,15 @@
 /*
 * Capture Images
-* Developer: Mr Abir Ahamed
+* Developer: Al-Amin Ahamed
 * Website: https://www.mishusoft.com
-* Official Link: https://download.mishusoft.com/addons/captureimages
+* Official Link: https://github.com/mralaminahamed/capture-images
 * */
 
 'use strict';
 
 import {browser} from "webextension-polyfill-ts";
 import {
-    captureElementByClassName,
-    captureElementById,
+    captureElement,
     createElement
 } from "./lib";
 import {app} from "./db";
@@ -21,7 +20,7 @@ browser.runtime.onMessage.addListener(
     (request, sender):any => {
         addAppWindow();
         if (request.greeting === "hello") {
-            captureElementById('app-window').style.display = 'block';
+            captureElement('app-window').style.display = 'block';
             if (document.querySelectorAll('img').length !==0){
                 document.querySelectorAll('img').forEach(function (img) {
                     console.log(img);
@@ -114,7 +113,7 @@ function addAppWindow(): any {
 
 
     /*navigators content*/
-    if (captureElementById('app-window') === null || captureElementById('app-window') === undefined) {
+    if (captureElement('app-window') === null || captureElement('app-window') === undefined) {
         /*console.info('setting window added')*/
         document.body.insertBefore(appWindow, document.body.lastElementChild);
     }
@@ -129,43 +128,43 @@ async function globalEventControllers(component: string) {
 
         /*console.log('set event for app-setting-opener action');
         console.log(document.querySelector('#app-setting-button'));*/
-        captureElementById('app-setting-button')?.addEventListener('click', function () {
+        captureElement('app-setting-button')?.addEventListener('click', function () {
             /*console.info('preparing to send data request');*/
             /*console.info('send data request');*/
         });
 
 
         /*console.log('set event for app-close-button action');
-        console.log(captureElementById('-app-close-button'));*/
-        captureElementById('app-close-button').addEventListener('click', function () {
-            captureElementById('app-window').style.display = 'none';
+        console.log(captureElement('-app-close-button'));*/
+        captureElement('app-close-button').addEventListener('click', function () {
+            captureElement('app-window').style.display = 'none';
         });
 
         /*console.log('set event for setting-get-a-licence action');
-        console.log(captureElementById('setting-get-a-licence'));*/
+        console.log(captureElement('setting-get-a-licence'));*/
 
         /*console.log('set event for nav action');*/
-        /*console.log(captureElementByClassName('acsAppNavUL'));*/
-        captureElementByClassName('appNavUL').childNodes.forEach(function (element: HTMLElement) {
+        /*console.log(captureElement('acsAppNavUL'));*/
+        captureElement('.appNavUL').childNodes.forEach(function (element: HTMLElement) {
             const content = (element.id).substr(((element.id).indexOf('nav-') + "nav-".length), (element.id).length);
             element.addEventListener('click', function () {
                 /*const parentNavigatorId = element.id;
                 console.log(element.id)
                 console.log(content)*/
                 if (content) {
-                    captureElementByClassName('setting-app-body-content').childNodes.forEach(function (element: HTMLElement) {
+                    captureElement('.setting-app-body-content').childNodes.forEach(function (element: HTMLElement) {
                         /*console.log(element)*/
                         if (element.id !== 'setting-app-content-' + content) {
-                            /*captureElementById(parentNavigatorId).removeAttribute('style');*/
+                            /*captureElement(parentNavigatorId).removeAttribute('style');*/
                             element.style.display = 'none';
                             /*console.log(element)
-                            console.log(captureElementById(parentNavigatorId))*/
+                            console.log(captureElement(parentNavigatorId))*/
                         } else {
                             if (element.style.display === 'none') {
                                 element.style.display = 'block';
-                                /*captureElementById(parentNavigatorId).setAttribute('style','background-color: #9932CC;cursor: pointer;');
+                                /*captureElement(parentNavigatorId).setAttribute('style','background-color: #9932CC;cursor: pointer;');
                                 console.log(element)
-                                console.log(captureElementById(parentNavigatorId))*/
+                                console.log(captureElement(parentNavigatorId))*/
                             }
                         }
                     });
@@ -173,7 +172,7 @@ async function globalEventControllers(component: string) {
             })
         });
 
-        /*console.log(captureElementById('app-setting-window'));*/
+        /*console.log(captureElement('app-setting-window'));*/
         /*console.log('completed');*/
     }
 }
