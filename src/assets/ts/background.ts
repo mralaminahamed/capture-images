@@ -18,14 +18,15 @@ browser.runtime.onInstalled.addListener(function() {
     });
 });
 
+//capture event on click context menu
 browser.contextMenus.onClicked.addListener(sendCaptureImagesRequest);
-
+//capture event on click action button
 browser.browserAction.onClicked.addListener(sendCaptureImagesRequest);
 
 function sendCaptureImagesRequest() {
     browser.tabs.query({active: true, currentWindow: true}).then(function(tabs:any) {
         console.log(tabs);
-        browser.tabs.sendMessage(tabs[0].id, {greeting: 'hello'}).then(r => console.log(r));
+        browser.tabs.sendMessage(tabs[0].id, {session: 'makePopUp'}).then(r => console.log(r));
     });
 }
 

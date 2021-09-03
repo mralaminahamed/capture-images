@@ -16,10 +16,20 @@ import {app} from "./db";
 /*@ts-ignore*/
 let images :any = [];
 
+browser.runtime.onMessage.addListener(request => {
+    console.log("Message from the background script:");
+    console.log(request.greeting);
+    return Promise.resolve({response: "Hi from content script"});
+});
+
+
+
 browser.runtime.onMessage.addListener(
     (request, sender):any => {
+        console.log(request)
+        console.log(sender)
         addAppWindow();
-        if (request.greeting === "hello") {
+        if (request.session === "makePopUp") {
             captureElement('app-window').style.display = 'block';
             if (document.querySelectorAll('img').length !==0){
                 document.querySelectorAll('img').forEach(function (img) {
