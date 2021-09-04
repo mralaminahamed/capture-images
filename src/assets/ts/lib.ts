@@ -31,21 +31,15 @@ export function IsJsonString(str: string) {
     return true;
 }
 
-export function createElement(node_data: any) {
-    let element, i, j, k;
-    for (i in node_data) {
-        let data: any = node_data[i];
-        for (j in data) {
-            let elementName = j;
-            let elementData = data[j];
-            element = document.createElement(elementName);
-            for (k in elementData) {
-                let element_attribute = k;
-                let element_attribute_value = elementData[k];
-                element.setAttribute(element_attribute, element_attribute_value);
-            }
+export function createElement(name : string, attributes: any) {
+    let element, attr;
+    element = document.createElement(name);
+    if (attributes.length !== 0){
+        for (attr in attributes) {
+            element.setAttribute(attr, attributes[attr]);
         }
     }
+
     return (element as HTMLElement);
 }
 

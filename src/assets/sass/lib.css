@@ -1,5 +1,20 @@
 /* src/assets/scss/lib.scss */
-/*colors */
-/*ranges */
+/*colors*/
+html:root {
+  --rootColorBlue: #53b5e5;
+  --deepBlue: #34abe6;
+  --lightBlue: #63ddfa52;
+  --deepBlackBlue: #006194;
+  --lightGreen: rgba(188, 247, 189, 0.7);
+  --red: #ff0000;
+  --lightRed: #f7d7d4;
+  --white: #ffffff;
+  --black: #000;
+  --green: #4caf50;
+  --lightgrey: #d3d3d3;
+  --grey: #808080;
+  --darkorchid: #9932CC;
+  --fontFamily: 'Arial, Helvetica, sans-serif, "courier new", "times new roman", fixed, monospace';
+}
 
 /*# sourceMappingURL=lib.css.map */

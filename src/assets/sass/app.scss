@@ -1,8 +1,10 @@
 /* src/assets/scss/app.scss */
 @import "./lib";
+@import "./functions";
+
 
 body {
-  min-width: $range450 !important;
+  min-width: range(450) !important;
 }
 
 .box-shadow {
@@ -12,17 +14,17 @@ body {
 }
 
 .app {
-  padding: $range10;
+  padding: var(range10);
   /*overflow: scroll;*/
-  background-color: $deepBlackBlue;
+  background-color: var(deepBlackBlue);
   box-sizing: border-box;
-  border-radius: $range10;
+  border-radius: var(range10);
 
   &-window {
     /*display: none;*/
     /* Hidden by default */
     position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
+    z-index: 1000; /* Sit on top */
     padding-top: 15%; /* Location of the box */
     top: 50%;
     left: 50%;
@@ -38,7 +40,7 @@ body {
       background-color: #fefefe;
       margin: auto;
       padding: 0;
-      border: 2px solid $RootColorBlue;
+      border: 2px solid var(--rootColorBlue);
       width: 750px;
       -webkit-border-radius: 10px;
       -moz-border-radius: 10px;
@@ -54,16 +56,18 @@ body {
   }
 
   &-button {
-    height: $range35;
+    height: range(35);
     display: inline-block;
-    margin: $range05;
-    padding: 0 $range20;
+    margin: range(05);
+    padding: 0 range(20);
     text-align: center;
     text-decoration: none;
     font: bold 16px/26px Arial, sans-serif;
-    -webkit-border-radius: $range05;
-    -moz-border-radius: $range05;
-    border-radius: $range05;
+
+    -webkit-border-radius: range(05);
+    -moz-border-radius: range(05);
+    border-radius: range(05);
+
     -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, .29), inset 1px 1px 1px rgba(255, 255, 255, .44);
     -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, .29), inset 1px 1px 1px rgba(255, 255, 255, .44);
     box-shadow: 1px 1px 1px rgba(0, 0, 0, .29), inset 1px 1px 1px rgba(255, 255, 255, .44);
@@ -73,52 +77,52 @@ body {
     transition: all .15s ease;
 
     &:disabled {
-      color: $black;
+      color: var(--black);
       cursor: not-allowed;
-      border: 2px solid $lightgrey;
-      background-color: $white;
+      border: 2px solid var(--lightgrey);
+      background-color: var(--white);
 
       &:hover {
-        color: $black;
+        color: var(--black);
         cursor: not-allowed;
-        border: 2px solid $lightgrey;
-        background-color: $white;
+        border: 2px solid var(--lightgrey);
+        background-color: var(--white);
       }
     }
 
 
     &-outline-primary {
-      border: 2px solid $RootColorBlue;
-      background-color: $white;
+      border: 2px solid var(--rootColorBlue);
+      background-color: var(--white);
       cursor: pointer;
 
       &:hover {
-        color: $white;
-        background-color: $RootColorBlue
+        color: var(--white);
+        background-color: var(--rootColorBlue)
       }
     }
 
 
     &-outline-danger {
-      color: $black;
-      border: 2px solid $red;
-      background-color: $white;
+      color: var(--black);
+      border: 2px solid var(--red);
+      background-color: var(--white);
 
       &:hover {
-        color: $white;
-        background-color: $red
+        color: var(--white);
+        background-color: var(--red)
       }
     }
 
 
     &-outline-success {
-      color: $black;
+      color: var(--black);
       border: 2px solid #4caf50; /* Green */
-      background-color: $white;
+      background-color: var(--white);
 
       &:hover {
-        color: $white;
-        background-color: $green;
+        color: var(--white);
+        background-color: var(--green);
         cursor: pointer
       }
     }
@@ -149,8 +153,8 @@ body {
 
   &-loader {
     cursor: progress;
-    width: $range100;
-    height: $range100;
+    width: range(100);
+    height: range(100);
 
     &-box {
       position: absolute;
@@ -188,14 +192,14 @@ body {
   padding: .5em .6em;
   margin-right: 5px;
   font: 14px/26px Arial, sans-serif;
-  background-color: $white;
-  border: 2px solid $RootColorBlue;
+  background-color: var(--white);
+  border: 2px solid var(--rootColorBlue);
   border-radius: 4px;
   display: inline-block;
   font-size: 100%;
-  -webkit-box-shadow: inset 0 1px 3px $lightgrey;
-  -moz-box-shadow: inset 0 1px 3px $lightgrey;
-  box-shadow: inset 0 1px 3px $lightgrey
+  -webkit-box-shadow: inset 0 1px 3px var(--lightgrey);
+  -moz-box-shadow: inset 0 1px 3px var(--lightgrey);
+  box-shadow: inset 0 1px 3px var(--lightgrey)
 }
 
 
@@ -262,12 +266,12 @@ body {
   position: relative;
   right: 10px;
   font-size: 16px;
-  border: 2px solid $red;
+  border: 2px solid var(--red);
   border-radius: 50%;
   width: 20px;
   height: 20px;
   padding: 0 0 2px 4px;
-  background-color: $red;
+  background-color: var(--red);
   color: white;
   cursor: pointer;
   user-select: none;
@@ -283,7 +287,7 @@ body {
   display: inline-block;
   text-align: left !important;
   margin: 0;
-  color: $black;
+  color: var(--black);
   width: 100%;
 }
 
@@ -306,9 +310,9 @@ body {
   padding: 15px 10px 10px 13px;
   text-align: left !important;
   font-size: 15px;
-  background-color: $RootColorBlue;
-  color: $white;
-  border-bottom: 2px solid $white;
+  background-color: var(--rootColorBlue);
+  color: var(--white);
+  border-bottom: 2px solid var(--white);
 }
 
 .acsAppNavUL li:last-child {
@@ -316,7 +320,7 @@ body {
 }
 
 .acsAppNavUL li:hover, .acsAppNavUL-li-active {
-  background-color: $darkorchid;
+  background-color: var(--darkorchid);
   cursor: pointer;
 }
 
@@ -358,21 +362,21 @@ body {
 }
 
 .ev_error {
-  color: $red;
-  border-left: 3px solid $red;
-  background-color: $lightRed;
+  color: var(--red);
+  border-left: 3px solid var(--red);
+  background-color: var(--lightRed);
 }
 
 .ev_success {
-  color: $green;
-  border-left: 3px solid $green;
-  background-color: $lightGreen;
+  color: var(--green);
+  border-left: 3px solid var(--green);
+  background-color: var(--lightGreen);
 }
 
 .ev_info {
-  color: $deepBlue;
-  border-left: 3px solid $RootColorBlue;
-  background-color: $lightBlue;
+  color: var(--deepBlue);
+  border-left: 3px solid var(--rootColorBlue);
+  background-color: var(--lightBlue);
 }
 
 .priceList {
@@ -422,19 +426,19 @@ body {
 }*/
 
 .setting-app-pay-symbol {
-  color: $white;
+  color: var(--white);
   padding: 3px;
-  border-radius: $range05;
+  border-radius: range(05);
   font-size: 12px;
 }
 
 .unpaid {
-  background-color: $red;
+  background-color: var(--red);
   margin-left: -51px;
 }
 
 .paid {
-  background-color: $green;
+  background-color: var(--green);
   margin-left: -34px;
 }
 
@@ -458,27 +462,27 @@ body {
 
 /* Track */
 #setting-app-content-help::-webkit-scrollbar-track {
-  box-shadow: inset 0 0 $range05 $grey;
-  border-radius: $red;
+  box-shadow: inset 0 0 range(05) var(--grey);
+  border-radius: var(--red);
 }
 
 /* Handle */
 #setting-app-content-help::-webkit-scrollbar-thumb {
-  background-color: $red;
-  border-radius: $range10;
+  background-color: var(--red);
+  border-radius: range(10);
 }
 
 .bottom-notification {
   bottom: 14px;
   right: 40px;
   position: fixed;
-  width: $range700;
+  width: range(700);
   height: 65px;
   text-align: justify;
-  background-color: $white;
+  background-color: var(--white);
   padding: 8px 14px;
-  border: 2px solid $RootColorBlue;
-  border-radius: $range10;
+  border: 2px solid var(--rootColorBlue);
+  border-radius: range(10);
 }
 
 #setting-app-user-payment-type::selection, #setting-app-user-payment-licence::selection, #setting-app-user-payment-date::selection,
@@ -494,30 +498,9 @@ body {
 
 .button:disabled, .button:disabled:hover, .button-outline-primary:disabled, .button-outline-primary:disabled, .button-outline-danger:disabled, .button-outline-danger:disabled:hover,
 .button-outline-success:disabled, .button-outline-success:disabled:hover, .app-select:disabled {
-  color: $black;
+  color: color('black',1);
   cursor: not-allowed;
-  border: 2px solid $lightgrey;
-  background-color: $white;
-}
-
-
-@media only screen and (max-width: 800px) {
-  .bottom-notification {
-    width: 80%;
-    height: 70px;
-  }
-}
-
-@media only screen and (max-width: 600px) {
-  .bottom-notification {
-    width: 75%;
-    height: 95px;
-  }
-}
-
-@media only screen and (max-width: 490px) {
-  .bottom-notification {
-    width: 70%;
-    height: 115px;
-  }
+  //border: 2px solid var(--lightgrey);
+  border: 2px solid color('gray',.30);
+  background-color: color('white',1);
 }

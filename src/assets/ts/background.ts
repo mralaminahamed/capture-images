@@ -10,6 +10,7 @@ import {browser} from "webextension-polyfill-ts";
 
 /*this extension main content*/
 browser.runtime.onInstalled.addListener(function() {
+    console.log(window.location)
     browser.contextMenus.create({
         "id": "captureImagesContextMenu",
         "title": "Capture Images",
@@ -25,7 +26,7 @@ browser.browserAction.onClicked.addListener(sendCaptureImagesRequest);
 function sendCaptureImagesRequest() {
     browser.tabs.query({active: true, currentWindow: true}).then(function(tabs:any) {
         console.log(tabs);
-        browser.tabs.sendMessage(tabs[0].id, {session: 'makePopUp'}).then(r => console.log(r));
+        browser.tabs.sendMessage(tabs[0].id, {session: 'makePopUp'});
     });
 }
 

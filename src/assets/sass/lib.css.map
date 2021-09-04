@@ -1,7 +1,1 @@
-{
-"version": 3,
-"mappings": "",
-"sources": [],
-"names": [],
-"file": "lib.css"
-}
+{"version":3,"sourceRoot":"","sources":["lib.sass"],"names":[],"mappings":"AAAA;AAEA;AACA;EACE;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EAEA","file":"lib.css"}

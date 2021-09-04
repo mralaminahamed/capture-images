@@ -1,0 +1,20 @@
+@media only screen and (max-width: 800px) {
+  .bottom-notification {
+    width: 80%;
+    height: 70px;
+  }
+}
+@media only screen and (max-width: 600px) {
+  .bottom-notification {
+    width: 75%;
+    height: 95px;
+  }
+}
+@media only screen and (max-width: 490px) {
+  .bottom-notification {
+    width: 70%;
+    height: 115px;
+  }
+}
+
+/*# sourceMappingURL=responsive.css.map */

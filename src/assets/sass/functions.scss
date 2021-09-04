@@ -1,0 +1,55 @@
+@function range($px_size) {
+  @return ($px_size/16)+rem;
+}
+
+@function color($color, $alpha) {
+  @if($color == 'black') {
+    @return rgba(0,0,0, $alpha);
+  }
+  @else if($color == 'navy') {
+    @return rgba(0,0,128, $alpha);
+  }
+  @else if($color == 'blue') {
+    @return rgba(0,0,255, $alpha);
+  }
+  @else if($color == 'green') {
+    @return rgba(0,128,0, $alpha);
+  }
+  @else if($color == 'teal') {
+    @return rgba(0,128,128, $alpha);
+  }
+  @else if($color == 'lime') {
+    @return rgba(0,255,0, $alpha);
+  }
+  @else if($color == 'aqua') {
+    @return rgba(0,255,255, $alpha);
+  }
+  @else if($color == 'maroon') {
+    @return rgba(128,0,0, $alpha);
+  }
+  @else if($color == 'purple') {
+    @return rgba(128,0,128, $alpha);
+  }
+  @else if($color == 'olive') {
+    @return rgba(128,128,0, $alpha);
+  }
+  @else if($color == 'gray') {
+    @return rgba(128,128,128, $alpha);
+  }
+  @else if($color == 'silver') {
+    @return rgba(192,192,192, $alpha);
+  }
+  @else if($color == 'red') {
+    @return rgba(255,0,0, $alpha);
+  }
+  @else if($color == 'fuchsia') {
+    @return rgba(255,0,255, $alpha);
+  }
+  @else if($color == 'yellow') {
+    @return rgba(255,255,0, $alpha);
+  }
+  @else {
+    @return rgba(255,255,255, $alpha);
+  }
+
+}

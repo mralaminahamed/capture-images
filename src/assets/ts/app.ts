@@ -12,8 +12,7 @@ import {
     createElement
 } from "./lib";
 import {app} from "./db";
-/*@ts-ignore*/
-let images :any = [];
+//let images :any = [];
 
 browser.runtime.onMessage.addListener(request => {
     console.log("Message from the background script:");
@@ -22,38 +21,19 @@ browser.runtime.onMessage.addListener(request => {
 });
 
 
-function handleResponse(message: { response: any; }) {
-    console.log(`Message from the background script:  ${message.response}`);
-}
-
-function handleError(error: any) {
-    console.log(`Error: ${error}`);
-}
-
-function notifyBackgroundPage(e:any) {
-    var sending = browser.runtime.sendMessage({
-        greeting: "Greeting from the content script"
-    });
-    sending.then(handleResponse, handleError);
-}
-
-window.addEventListener("click", notifyBackgroundPage);
-
-
-
 browser.runtime.onMessage.addListener(
     (request, sender):any => {
         console.log(request)
         console.log(sender)
         addAppWindow();
         if (request.session === "makePopUp") {
-            captureElement('app-window').style.display = 'block';
+            captureElement('#app-window').style.display = 'block';
             if (document.querySelectorAll('img').length !==0){
                 document.querySelectorAll('img').forEach(function (img) {
                     console.log(img);
                 });
             }
-            alert(request);
+            //alert(request);
 
                 /*let capture_images_app:any = document.getElementById('captured-images-viewer');
               /*if (capture_images_app.style.display !== 'block'){
@@ -111,29 +91,23 @@ browser.runtime.onMessage.addListener(
 
 /*@ts-ignore*/
 function addAppWindow(): any {
-    let appWindow: any = createElement([{
-        'div': {
-            'id': 'app-window',
-            'class': 'app-window',
-            'style': 'display:none;'
-        }
-    }]);
-    let appBody: any = createElement([{
-        'div': {
-            'id': 'app-window-body',
-            'class': 'row app-window-body animate'
-        }
-    }]);
+    let appWindow: any = createElement(
+        'div', {
+            'id': 'app-window', 'class': 'app-window', 'style': 'display:none;'
+    });
+    let appBody: any = createElement( 'div', {
+        'id': 'app-window-body', 'class': 'row app-window-body animate'
+    });
     appWindow.appendChild(appBody);
 
-    let appTitleBar: any = createElement([{'div': {'class': 'appTitleBar'}}]);
-    let appTitleText: any = createElement([{'div': {'class': 'appTitleText'}}]);
+    let appTitleBar: any = createElement('div', {'class': 'appTitleBar'});
+    let appTitleText: any = createElement('div', {'class': 'appTitleText'});
     appTitleText.textContent = app.about.name_spaced;
     appTitleBar.appendChild(appTitleText);
-    let appSearchBox:any = createElement([{'input' : {'id':'image-search-box', 'class':'app-search-box', 'type':'search', 'placeholder':'Search any images'}}]);
+    let appSearchBox:any = createElement('input', {'id':'image-search-box', 'class':'app-search-box', 'type':'search', 'placeholder':'Search any images'});
     appTitleBar.appendChild(appSearchBox);
 
-    let appTitleSymbol: any = createElement([{'div': {'id': 'app-close-button', 'class': 'appTitleSymbol'}}]);
+    let appTitleSymbol: any = createElement('div', {'id': 'app-close-button', 'class': 'appTitleSymbol'});
     appTitleSymbol.textContent = 'x';
     appTitleBar.appendChild(appTitleSymbol);
     appBody.appendChild(appTitleBar);
@@ -155,7 +129,7 @@ async function globalEventControllers(component: string) {
 
         /*console.log('set event for app-setting-opener action');
         console.log(document.querySelector('#app-setting-button'));*/
-        captureElement('app-setting-button')?.addEventListener('click', function () {
+        captureElement('#app-setting-button')?.addEventListener('click', function () {
             /*console.info('preparing to send data request');*/
             /*console.info('send data request');*/
         });
@@ -163,8 +137,8 @@ async function globalEventControllers(component: string) {
 
         /*console.log('set event for app-close-button action');
         console.log(captureElement('-app-close-button'));*/
-        captureElement('app-close-button').addEventListener('click', function () {
-            captureElement('app-window').style.display = 'none';
+        captureElement('#app-close-button').addEventListener('click', function () {
+            captureElement('#app-window').style.display = 'none';
         });
 
         /*console.log('set event for setting-get-a-licence action');

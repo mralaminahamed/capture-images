@@ -64,6 +64,7 @@ const commonExtConfig = {
         'manifest.json': './manifest.json.src',
         'content': './assets/ts/app.ts',
         'background': './assets/ts/background.ts',
+        'ui': './assets/ts/ui.ts',
     }
 };
 
@@ -234,7 +235,7 @@ const testConfig = {
     },
 }
 
-module.exports = (env, argv) => {
+module.exports = (env) => {
     let configs = [testConfig]
     if (env && env.target === 'chrome') {
         configs.push({...chromeConfig, name: 'extension'})
