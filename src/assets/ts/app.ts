@@ -22,15 +22,15 @@ browser.runtime.onMessage.addListener(request => {
 });
 
 
-function handleResponse(message) {
+function handleResponse(message: { response: any; }) {
     console.log(`Message from the background script:  ${message.response}`);
 }
 
-function handleError(error) {
+function handleError(error: any) {
     console.log(`Error: ${error}`);
 }
 
-function notifyBackgroundPage(e) {
+function notifyBackgroundPage(e:any) {
     var sending = browser.runtime.sendMessage({
         greeting: "Greeting from the content script"
     });
