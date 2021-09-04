@@ -1,268 +1,101 @@
-/******/ (() => { // webpackBootstrap
-/******/ 	var __webpack_modules__ = ({
-
-/***/ "./assets/ts/db.ts":
-/*!*************************!*\
-  !*** ./assets/ts/db.ts ***!
-  \*************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "today": () => (/* binding */ today),
-/* harmony export */   "app": () => (/* binding */ app)
-/* harmony export */ });
-/*
-* Capture Images
-* Developer: Al-Amin Ahamed
-* Website: https://www.mishusoft.com
-* Official Link: https://github.com/mralaminahamed/capture-images
-* */
-const today = new Date();
-const app = {
-    "about": {
-        "name": "CaptureImages",
-        "guid": "addon.firefox@developer.mishuoft.com",
-        "short_name": "CaptureImages",
-        "name_spaced": "Capture Images",
-        "total_users": "380",
-        "version": "0.4.0",
-    },
-    "website": {
-        "home": "https://www.mishusoft.com/",
-        "IpInfoTEST": "https://api.ipdata.co/?api-key=test",
-        "IpInfo": "https://api.ipdata.co/?api-key=2f9dde381f67efed325acfb1011a988036b28fc6cc02f07668ef7180",
-        "temporary": {
-            "home": "http://localhost/",
-            "monitorURL": "http://localhost/monitor/browser/",
-        },
-        "publish": {
-            "home": "https://www.mishusoft.com/",
-            "monitorURL": "https://www.mishusoft.com/monitor/browser/",
-        }
-    },
-    "baseURI": document.URL,
-    "document": document,
-    "domain": {
-        "name": document.domain,
-    }
-};
-
-
-/***/ }),
-
-/***/ "./assets/ts/lib.ts":
-/*!**************************!*\
-  !*** ./assets/ts/lib.ts ***!
-  \**************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "appTracker": () => (/* binding */ appTracker),
-/* harmony export */   "globalAppMonitorURL": () => (/* binding */ globalAppMonitorURL),
-/* harmony export */   "appdata_default": () => (/* binding */ appdata_default),
-/* harmony export */   "IsJsonString": () => (/* binding */ IsJsonString),
-/* harmony export */   "createElement": () => (/* binding */ createElement),
-/* harmony export */   "captureElement": () => (/* binding */ captureElement),
-/* harmony export */   "captureElementByClassName": () => (/* binding */ captureElementByClassName),
-/* harmony export */   "captureElementByTagName": () => (/* binding */ captureElementByTagName),
-/* harmony export */   "sendRequest": () => (/* binding */ sendRequest),
-/* harmony export */   "createDefaultAppData": () => (/* binding */ createDefaultAppData),
-/* harmony export */   "optimizeAppSettingObject": () => (/* binding */ optimizeAppSettingObject)
-/* harmony export */ });
-/* harmony import */ var _db__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./db */ "./assets/ts/db.ts");
-/*
-* Capture Images
-* Developer: Al-Amin Ahamed
-* Website: https://www.mishusoft.com
-* Official Link: https://github.com/mralaminahamed/capture-images
-* */
-
-
-/*required variables*/
-const appTracker = _db__WEBPACK_IMPORTED_MODULE_0__.app.about.short_name + '@' + _db__WEBPACK_IMPORTED_MODULE_0__.app.about.version;
-let globalAppMonitorURL;
-let appdata_default;
-/*initialize on extension installed*/
-globalAppMonitorURL = 'http://localhost/monitor/browser/';
-/*required variables*/
-function IsJsonString(str) {
-    try {
-        JSON.parse(str);
-    }
-    catch (e) {
-        return false;
-    }
-    return true;
-}
-function createElement(node_data) {
-    let element, i, j, k;
-    for (i in node_data) {
-        let data = node_data[i];
-        for (j in data) {
-            let elementName = j;
-            let elementData = data[j];
-            element = document.createElement(elementName);
-            for (k in elementData) {
-                let element_attribute = k;
-                let element_attribute_value = elementData[k];
-                element.setAttribute(element_attribute, element_attribute_value);
-            }
-        }
-    }
-    return element;
-}
-function captureElement(selectors) {
-    if (document.querySelector(selectors) !== null) {
-        return document.querySelector(selectors);
-    }
-}
-function captureElementByClassName(ClassName) {
-    if (document.querySelector('.' + ClassName) !== null) {
-        return document.querySelector('.' + ClassName);
-    }
-}
-function captureElementByTagName(TagName) {
-    if (document.querySelector(TagName) !== null) {
-        return document.querySelector(TagName);
-    }
-}
-function sendRequest(options, callback) {
-    let dataType;
-    console.group('XHR request');
-    console.log(options);
-    if (typeof options === "object") {
-        console.info('options is object');
-        if (options.method !== null && options.url !== null) {
-            console.info('method and url found');
-            let request = new XMLHttpRequest();
-            console.info('creating xhr request');
-            request.open(options.method, options.url, options.async);
-            console.info('opening url with xhr request');
-            console.info('setting xhr request header');
-            if (options.header !== null && typeof options.header == "object") {
-                for (let i = 0; i < options.header.length; i++) {
-                    request.setRequestHeader(options.header[i].name, options.header[i].value);
-                    if (options.header[i].value.indexOf('form') !== -1) {
-                        dataType = 'formData';
-                    }
-                    if (options.header[i].value.indexOf('json') !== -1) {
-                        dataType = 'jsonData';
-                    }
-                }
-            }
-            else {
-                console.error("Error: Invalid headers.");
-            }
-            if (options.data !== null && typeof options.data == "object") {
-                if (dataType === 'jsonData') {
-                    console.info(options.data);
-                    request.send(JSON.stringify(options.data));
-                }
-                if (dataType === 'formData') {
-                    let formData = new FormData();
-                    Object.keys(options.data).forEach(function (key) {
-                        formData.append(key, options.data[key]);
-                    });
-                    console.info(options.data);
-                    console.info(formData);
-                    request.send(formData);
-                }
-            }
-            else {
-                request.send();
-            }
-            console.info('sending data with xhr request');
-            request.onreadystatechange = function () {
-                if (this.readyState === 4 && this.status === 200) {
-                    console.info('getting data with xhr request');
-                    console.log(this.responseText);
-                    if (IsJsonString(this.responseText)) {
-                        let data = JSON.parse(this.responseText);
-                        if (callback) {
-                            callback(data);
-                        }
-                    }
-                }
-            };
-        }
-        else {
-            console.error("Error: METHOD and URL empty.");
-        }
-    }
-    else {
-        console.error("Error: Invalid options.");
-    }
-    console.groupEnd();
-}
-function createDefaultAppData(browserNameFull, browserVersion, clientIP, clientCity, clientCountry, clientDeviceName, clientDevicePlatform, clientPlatformArchitecture) {
-    return appdata_default = {
-        "app": { "id": "", "name": _db__WEBPACK_IMPORTED_MODULE_0__.app.about.name, "version": _db__WEBPACK_IMPORTED_MODULE_0__.app.about.version },
-        "browser": { "name": browserNameFull, "version": browserVersion },
-        "client": { "ip": clientIP, "city": clientCity, "country": clientCountry },
-        "device": {
-            "name": clientDeviceName,
-            "platform": clientDevicePlatform,
-            "architecture": clientPlatformArchitecture
-        },
-        "install": { "date": _db__WEBPACK_IMPORTED_MODULE_0__.today },
-        /*new Date(year, monthIndex [, day [, hours [, minutes [, seconds [, milliseconds]]]]])*/
-    };
-}
-function optimizeAppSettingObject(setting, options, callbackFn, fallbackFn) {
-    /*console.log(setting);
-    console.log(options);
-    console.log(Object.keys(setting));*/
-    if (options.length !== 0) {
-        options.forEach(function (item) {
-            Object.keys(item).forEach(function (__opt_Key) {
-                Object.keys(setting).forEach(function (__obj_Key) {
-                    if (__opt_Key === __obj_Key) {
-                        item[__opt_Key].forEach(function (__opt_sub_key) {
-                            Object.keys(setting[__obj_Key]).forEach(function (__obj_sub_key) {
-                                if (__opt_sub_key !== __obj_sub_key && __obj_sub_key === '') {
-                                    /*console.log("__opt_sub_key undefined...");
-                                    console.log(__opt_sub_key);*/
-                                    if (fallbackFn) {
-                                        return fallbackFn();
-                                    }
-                                } /*else {
-                                    console.log("__obj_Key...");
-                                    console.log(__obj_Key);
-                                    console.log("setting[__objKey]...");
-                                    console.log(setting[__obj_Key]);
-                                    console.log("[__sub_key]...");
-                                    console.log(__obj_sub_key);
-                                    console.log("setting[__objKey][__sub_key]...");
-                                    console.log(setting[__obj_Key][__obj_sub_key]);
-                                }*/
-                            });
-                        });
-                    }
-                });
-            });
-        });
-        if (callbackFn) {
-            return callbackFn(setting);
-        }
-    }
-}
-
-
-/***/ }),
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = "./assets/ts/app.ts");
+/******/ })
+/************************************************************************/
+/******/ ({
 
 /***/ "../node_modules/webextension-polyfill-ts/lib/index.js":
 /*!*************************************************************!*\
   !*** ../node_modules/webextension-polyfill-ts/lib/index.js ***!
   \*************************************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-Object.defineProperty(exports, "__esModule", ({ value: true }));
+Object.defineProperty(exports, "__esModule", { value: true });
 
 // if not in a browser, assume we're in a test, return a dummy
 if (typeof window === "undefined") exports.browser = {};
@@ -275,14 +108,15 @@ else exports.browser = __webpack_require__(/*! webextension-polyfill */ "../node
 /*!**********************************************************************!*\
   !*** ../node_modules/webextension-polyfill/dist/browser-polyfill.js ***!
   \**********************************************************************/
-/***/ (function(module, exports) {
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;(function (global, factory) {
   if (true) {
     !(__WEBPACK_AMD_DEFINE_ARRAY__ = [module], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
-		__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
-		(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
-		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
+				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
   } else { var mod; }
 })(typeof globalThis !== "undefined" ? globalThis : typeof self !== "undefined" ? self : this, function (module) {
   /* webextension-polyfill - v0.6.0 - Mon Dec 23 2019 12:32:53 */
@@ -1498,73 +1332,19 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 //# sourceMappingURL=browser-polyfill.js.map
 
 
-/***/ })
+/***/ }),
 
-/******/ 	});
-/************************************************************************/
-/******/ 	// The module cache
-/******/ 	var __webpack_module_cache__ = {};
-/******/ 	
-/******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
-/******/ 		// Check if module is in cache
-/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
-/******/ 		if (cachedModule !== undefined) {
-/******/ 			return cachedModule.exports;
-/******/ 		}
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = __webpack_module_cache__[moduleId] = {
-/******/ 			// no module.id needed
-/******/ 			// no module.loaded needed
-/******/ 			exports: {}
-/******/ 		};
-/******/ 	
-/******/ 		// Execute the module function
-/******/ 		__webpack_modules__[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-/******/ 	
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
-/******/ 	}
-/******/ 	
-/************************************************************************/
-/******/ 	/* webpack/runtime/define property getters */
-/******/ 	(() => {
-/******/ 		// define getter functions for harmony exports
-/******/ 		__webpack_require__.d = (exports, definition) => {
-/******/ 			for(var key in definition) {
-/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
-/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
-/******/ 				}
-/******/ 			}
-/******/ 		};
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
-/******/ 	(() => {
-/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/make namespace object */
-/******/ 	(() => {
-/******/ 		// define __esModule on exports
-/******/ 		__webpack_require__.r = (exports) => {
-/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
-/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
-/******/ 			}
-/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
-/******/ 		};
-/******/ 	})();
-/******/ 	
-/************************************************************************/
-var __webpack_exports__ = {};
-// This entry need to be wrapped in an IIFE because it need to be in strict mode.
-(() => {
-"use strict";
+/***/ "./assets/ts/app.ts":
 /*!**************************!*\
   !*** ./assets/ts/app.ts ***!
   \**************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var webextension_polyfill_ts__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! webextension-polyfill-ts */ "../node_modules/webextension-polyfill-ts/lib/index.js");
+/* harmony import */ var webextension_polyfill_ts__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(webextension_polyfill_ts__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./lib */ "./assets/ts/lib.ts");
 /* harmony import */ var _db__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./db */ "./assets/ts/db.ts");
 /*
@@ -1576,13 +1356,19 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
 /*@ts-ignore*/
 let images = [];
-webextension_polyfill_ts__WEBPACK_IMPORTED_MODULE_0__.browser.runtime.onMessage.addListener((request, sender) => {
+webextension_polyfill_ts__WEBPACK_IMPORTED_MODULE_0__["browser"].runtime.onMessage.addListener(request => {
+    console.log("Message from the background script:");
+    console.log(request.greeting);
+    return Promise.resolve({ response: "Hi from content script" });
+});
+webextension_polyfill_ts__WEBPACK_IMPORTED_MODULE_0__["browser"].runtime.onMessage.addListener((request, sender) => {
+    console.log(request);
+    console.log(sender);
     addAppWindow();
-    if (request.greeting === "hello") {
-        (0,_lib__WEBPACK_IMPORTED_MODULE_1__.captureElement)('app-window').style.display = 'block';
+    if (request.session === "makePopUp") {
+        Object(_lib__WEBPACK_IMPORTED_MODULE_1__["captureElement"])('app-window').style.display = 'block';
         if (document.querySelectorAll('img').length !== 0) {
             document.querySelectorAll('img').forEach(function (img) {
                 console.log(img);
@@ -1642,32 +1428,32 @@ webextension_polyfill_ts__WEBPACK_IMPORTED_MODULE_0__.browser.runtime.onMessage.
 });
 /*@ts-ignore*/
 function addAppWindow() {
-    let appWindow = (0,_lib__WEBPACK_IMPORTED_MODULE_1__.createElement)([{
+    let appWindow = Object(_lib__WEBPACK_IMPORTED_MODULE_1__["createElement"])([{
             'div': {
                 'id': 'app-window',
                 'class': 'app-window',
                 'style': 'display:none;'
             }
         }]);
-    let appBody = (0,_lib__WEBPACK_IMPORTED_MODULE_1__.createElement)([{
+    let appBody = Object(_lib__WEBPACK_IMPORTED_MODULE_1__["createElement"])([{
             'div': {
                 'id': 'app-window-body',
                 'class': 'row app-window-body animate'
             }
         }]);
     appWindow.appendChild(appBody);
-    let appTitleBar = (0,_lib__WEBPACK_IMPORTED_MODULE_1__.createElement)([{ 'div': { 'class': 'appTitleBar' } }]);
-    let appTitleText = (0,_lib__WEBPACK_IMPORTED_MODULE_1__.createElement)([{ 'div': { 'class': 'appTitleText' } }]);
-    appTitleText.textContent = _db__WEBPACK_IMPORTED_MODULE_2__.app.about.name_spaced;
+    let appTitleBar = Object(_lib__WEBPACK_IMPORTED_MODULE_1__["createElement"])([{ 'div': { 'class': 'appTitleBar' } }]);
+    let appTitleText = Object(_lib__WEBPACK_IMPORTED_MODULE_1__["createElement"])([{ 'div': { 'class': 'appTitleText' } }]);
+    appTitleText.textContent = _db__WEBPACK_IMPORTED_MODULE_2__["app"].about.name_spaced;
     appTitleBar.appendChild(appTitleText);
-    let appSearchBox = (0,_lib__WEBPACK_IMPORTED_MODULE_1__.createElement)([{ 'input': { 'id': 'image-search-box', 'class': 'app-search-box', 'type': 'search', 'placeholder': 'Search any images' } }]);
+    let appSearchBox = Object(_lib__WEBPACK_IMPORTED_MODULE_1__["createElement"])([{ 'input': { 'id': 'image-search-box', 'class': 'app-search-box', 'type': 'search', 'placeholder': 'Search any images' } }]);
     appTitleBar.appendChild(appSearchBox);
-    let appTitleSymbol = (0,_lib__WEBPACK_IMPORTED_MODULE_1__.createElement)([{ 'div': { 'id': 'app-close-button', 'class': 'appTitleSymbol' } }]);
+    let appTitleSymbol = Object(_lib__WEBPACK_IMPORTED_MODULE_1__["createElement"])([{ 'div': { 'id': 'app-close-button', 'class': 'appTitleSymbol' } }]);
     appTitleSymbol.textContent = 'x';
     appTitleBar.appendChild(appTitleSymbol);
     appBody.appendChild(appTitleBar);
     /*navigators content*/
-    if ((0,_lib__WEBPACK_IMPORTED_MODULE_1__.captureElement)('app-window') === null || (0,_lib__WEBPACK_IMPORTED_MODULE_1__.captureElement)('app-window') === undefined) {
+    if (Object(_lib__WEBPACK_IMPORTED_MODULE_1__["captureElement"])('app-window') === null || Object(_lib__WEBPACK_IMPORTED_MODULE_1__["captureElement"])('app-window') === undefined) {
         /*console.info('setting window added')*/
         document.body.insertBefore(appWindow, document.body.lastElementChild);
     }
@@ -1679,27 +1465,27 @@ async function globalEventControllers(component) {
         /*console.log('set event for app-setting-button action');*/
         /*console.log('set event for app-setting-opener action');
         console.log(document.querySelector('#app-setting-button'));*/
-        (_a = (0,_lib__WEBPACK_IMPORTED_MODULE_1__.captureElement)('app-setting-button')) === null || _a === void 0 ? void 0 : _a.addEventListener('click', function () {
+        (_a = Object(_lib__WEBPACK_IMPORTED_MODULE_1__["captureElement"])('app-setting-button')) === null || _a === void 0 ? void 0 : _a.addEventListener('click', function () {
             /*console.info('preparing to send data request');*/
             /*console.info('send data request');*/
         });
         /*console.log('set event for app-close-button action');
         console.log(captureElement('-app-close-button'));*/
-        (0,_lib__WEBPACK_IMPORTED_MODULE_1__.captureElement)('app-close-button').addEventListener('click', function () {
-            (0,_lib__WEBPACK_IMPORTED_MODULE_1__.captureElement)('app-window').style.display = 'none';
+        Object(_lib__WEBPACK_IMPORTED_MODULE_1__["captureElement"])('app-close-button').addEventListener('click', function () {
+            Object(_lib__WEBPACK_IMPORTED_MODULE_1__["captureElement"])('app-window').style.display = 'none';
         });
         /*console.log('set event for setting-get-a-licence action');
         console.log(captureElement('setting-get-a-licence'));*/
         /*console.log('set event for nav action');*/
         /*console.log(captureElement('acsAppNavUL'));*/
-        (0,_lib__WEBPACK_IMPORTED_MODULE_1__.captureElement)('.appNavUL').childNodes.forEach(function (element) {
+        Object(_lib__WEBPACK_IMPORTED_MODULE_1__["captureElement"])('.appNavUL').childNodes.forEach(function (element) {
             const content = (element.id).substr(((element.id).indexOf('nav-') + "nav-".length), (element.id).length);
             element.addEventListener('click', function () {
                 /*const parentNavigatorId = element.id;
                 console.log(element.id)
                 console.log(content)*/
                 if (content) {
-                    (0,_lib__WEBPACK_IMPORTED_MODULE_1__.captureElement)('.setting-app-body-content').childNodes.forEach(function (element) {
+                    Object(_lib__WEBPACK_IMPORTED_MODULE_1__["captureElement"])('.setting-app-body-content').childNodes.forEach(function (element) {
                         /*console.log(element)*/
                         if (element.id !== 'setting-app-content-' + content) {
                             /*captureElement(parentNavigatorId).removeAttribute('style');*/
@@ -1759,8 +1545,258 @@ function assembleUI() {
     document.body.appendChild(app_image_window);
 }
 
-})();
 
-/******/ })()
-;
+/***/ }),
+
+/***/ "./assets/ts/db.ts":
+/*!*************************!*\
+  !*** ./assets/ts/db.ts ***!
+  \*************************/
+/*! exports provided: today, app */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "today", function() { return today; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "app", function() { return app; });
+/*
+* Capture Images
+* Developer: Al-Amin Ahamed
+* Website: https://www.mishusoft.com
+* Official Link: https://github.com/mralaminahamed/capture-images
+* */
+const today = new Date();
+const app = {
+    "about": {
+        "name": "CaptureImages",
+        "guid": "addon.firefox@developer.mishuoft.com",
+        "short_name": "CaptureImages",
+        "name_spaced": "Capture Images",
+        "total_users": "380",
+        "version": "0.4.0",
+    },
+    "website": {
+        "home": "https://www.mishusoft.com/",
+        "IpInfoTEST": "https://api.ipdata.co/?api-key=test",
+        "IpInfo": "https://api.ipdata.co/?api-key=2f9dde381f67efed325acfb1011a988036b28fc6cc02f07668ef7180",
+        "temporary": {
+            "home": "http://localhost/",
+            "monitorURL": "http://localhost/monitor/browser/",
+        },
+        "publish": {
+            "home": "https://www.mishusoft.com/",
+            "monitorURL": "https://www.mishusoft.com/monitor/browser/",
+        }
+    },
+    "baseURI": document.URL,
+    "document": document,
+    "domain": {
+        "name": document.domain,
+    }
+};
+
+
+/***/ }),
+
+/***/ "./assets/ts/lib.ts":
+/*!**************************!*\
+  !*** ./assets/ts/lib.ts ***!
+  \**************************/
+/*! exports provided: appTracker, globalAppMonitorURL, appdata_default, IsJsonString, createElement, captureElement, captureElementByClassName, captureElementByTagName, sendRequest, createDefaultAppData, optimizeAppSettingObject */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "appTracker", function() { return appTracker; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "globalAppMonitorURL", function() { return globalAppMonitorURL; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "appdata_default", function() { return appdata_default; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "IsJsonString", function() { return IsJsonString; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createElement", function() { return createElement; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "captureElement", function() { return captureElement; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "captureElementByClassName", function() { return captureElementByClassName; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "captureElementByTagName", function() { return captureElementByTagName; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "sendRequest", function() { return sendRequest; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createDefaultAppData", function() { return createDefaultAppData; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "optimizeAppSettingObject", function() { return optimizeAppSettingObject; });
+/* harmony import */ var _db__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./db */ "./assets/ts/db.ts");
+/*
+* Capture Images
+* Developer: Al-Amin Ahamed
+* Website: https://www.mishusoft.com
+* Official Link: https://github.com/mralaminahamed/capture-images
+* */
+
+/*required variables*/
+const appTracker = _db__WEBPACK_IMPORTED_MODULE_0__["app"].about.short_name + '@' + _db__WEBPACK_IMPORTED_MODULE_0__["app"].about.version;
+let globalAppMonitorURL;
+let appdata_default;
+/*initialize on extension installed*/
+globalAppMonitorURL = 'http://localhost/monitor/browser/';
+/*required variables*/
+function IsJsonString(str) {
+    try {
+        JSON.parse(str);
+    }
+    catch (e) {
+        return false;
+    }
+    return true;
+}
+function createElement(node_data) {
+    let element, i, j, k;
+    for (i in node_data) {
+        let data = node_data[i];
+        for (j in data) {
+            let elementName = j;
+            let elementData = data[j];
+            element = document.createElement(elementName);
+            for (k in elementData) {
+                let element_attribute = k;
+                let element_attribute_value = elementData[k];
+                element.setAttribute(element_attribute, element_attribute_value);
+            }
+        }
+    }
+    return element;
+}
+function captureElement(selectors) {
+    if (document.querySelector(selectors) !== null) {
+        return document.querySelector(selectors);
+    }
+}
+function captureElementByClassName(ClassName) {
+    if (document.querySelector('.' + ClassName) !== null) {
+        return document.querySelector('.' + ClassName);
+    }
+}
+function captureElementByTagName(TagName) {
+    if (document.querySelector(TagName) !== null) {
+        return document.querySelector(TagName);
+    }
+}
+function sendRequest(options, callback) {
+    let dataType;
+    console.group('XHR request');
+    console.log(options);
+    if (typeof options === "object") {
+        console.info('options is object');
+        if (options.method !== null && options.url !== null) {
+            console.info('method and url found');
+            let request = new XMLHttpRequest();
+            console.info('creating xhr request');
+            request.open(options.method, options.url, options.async);
+            console.info('opening url with xhr request');
+            console.info('setting xhr request header');
+            if (options.header !== null && typeof options.header == "object") {
+                for (let i = 0; i < options.header.length; i++) {
+                    request.setRequestHeader(options.header[i].name, options.header[i].value);
+                    if (options.header[i].value.indexOf('form') !== -1) {
+                        dataType = 'formData';
+                    }
+                    if (options.header[i].value.indexOf('json') !== -1) {
+                        dataType = 'jsonData';
+                    }
+                }
+            }
+            else {
+                console.error("Error: Invalid headers.");
+            }
+            if (options.data !== null && typeof options.data == "object") {
+                if (dataType === 'jsonData') {
+                    console.info(options.data);
+                    request.send(JSON.stringify(options.data));
+                }
+                if (dataType === 'formData') {
+                    let formData = new FormData();
+                    Object.keys(options.data).forEach(function (key) {
+                        formData.append(key, options.data[key]);
+                    });
+                    console.info(options.data);
+                    console.info(formData);
+                    request.send(formData);
+                }
+            }
+            else {
+                request.send();
+            }
+            console.info('sending data with xhr request');
+            request.onreadystatechange = function () {
+                if (this.readyState === 4 && this.status === 200) {
+                    console.info('getting data with xhr request');
+                    console.log(this.responseText);
+                    if (IsJsonString(this.responseText)) {
+                        let data = JSON.parse(this.responseText);
+                        if (callback) {
+                            callback(data);
+                        }
+                    }
+                }
+            };
+        }
+        else {
+            console.error("Error: METHOD and URL empty.");
+        }
+    }
+    else {
+        console.error("Error: Invalid options.");
+    }
+    console.groupEnd();
+}
+function createDefaultAppData(browserNameFull, browserVersion, clientIP, clientCity, clientCountry, clientDeviceName, clientDevicePlatform, clientPlatformArchitecture) {
+    return appdata_default = {
+        "app": { "id": "", "name": _db__WEBPACK_IMPORTED_MODULE_0__["app"].about.name, "version": _db__WEBPACK_IMPORTED_MODULE_0__["app"].about.version },
+        "browser": { "name": browserNameFull, "version": browserVersion },
+        "client": { "ip": clientIP, "city": clientCity, "country": clientCountry },
+        "device": {
+            "name": clientDeviceName,
+            "platform": clientDevicePlatform,
+            "architecture": clientPlatformArchitecture
+        },
+        "install": { "date": _db__WEBPACK_IMPORTED_MODULE_0__["today"] },
+    };
+}
+function optimizeAppSettingObject(setting, options, callbackFn, fallbackFn) {
+    /*console.log(setting);
+    console.log(options);
+    console.log(Object.keys(setting));*/
+    if (options.length !== 0) {
+        options.forEach(function (item) {
+            Object.keys(item).forEach(function (__opt_Key) {
+                Object.keys(setting).forEach(function (__obj_Key) {
+                    if (__opt_Key === __obj_Key) {
+                        item[__opt_Key].forEach(function (__opt_sub_key) {
+                            Object.keys(setting[__obj_Key]).forEach(function (__obj_sub_key) {
+                                if (__opt_sub_key !== __obj_sub_key && __obj_sub_key === '') {
+                                    /*console.log("__opt_sub_key undefined...");
+                                    console.log(__opt_sub_key);*/
+                                    if (fallbackFn) {
+                                        return fallbackFn();
+                                    }
+                                } /*else {
+                                    console.log("__obj_Key...");
+                                    console.log(__obj_Key);
+                                    console.log("setting[__objKey]...");
+                                    console.log(setting[__obj_Key]);
+                                    console.log("[__sub_key]...");
+                                    console.log(__obj_sub_key);
+                                    console.log("setting[__objKey][__sub_key]...");
+                                    console.log(setting[__obj_Key][__obj_sub_key]);
+                                }*/
+                            });
+                        });
+                    }
+                });
+            });
+        });
+        if (callbackFn) {
+            return callbackFn(setting);
+        }
+    }
+}
+/*required functions*/
+
+
+/***/ })
+
+/******/ });
 //# sourceMappingURL=content.js.map

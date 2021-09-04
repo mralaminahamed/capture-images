@@ -6,7 +6,6 @@
 * */
 
 
-'use strict';
 import {browser} from "webextension-polyfill-ts";
 
 /*this extension main content*/

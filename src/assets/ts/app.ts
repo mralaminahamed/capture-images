@@ -5,7 +5,6 @@
 * Official Link: https://github.com/mralaminahamed/capture-images
 * */
 
-'use strict';
 
 import {browser} from "webextension-polyfill-ts";
 import {
@@ -18,9 +17,27 @@ let images :any = [];
 
 browser.runtime.onMessage.addListener(request => {
     console.log("Message from the background script:");
-    console.log(request.greeting);
+    console.log(request);
     return Promise.resolve({response: "Hi from content script"});
 });
+
+
+function handleResponse(message) {
+    console.log(`Message from the background script:  ${message.response}`);
+}
+
+function handleError(error) {
+    console.log(`Error: ${error}`);
+}
+
+function notifyBackgroundPage(e) {
+    var sending = browser.runtime.sendMessage({
+        greeting: "Greeting from the content script"
+    });
+    sending.then(handleResponse, handleError);
+}
+
+window.addEventListener("click", notifyBackgroundPage);
 
 
 

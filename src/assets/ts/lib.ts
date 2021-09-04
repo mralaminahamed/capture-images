@@ -5,7 +5,6 @@
 * Official Link: https://github.com/mralaminahamed/capture-images
 * */
 
-'use strict';
 import {app,today} from "./db";
 
 /*required variables*/
