@@ -5,7 +5,12 @@
 * Official Link: https://github.com/mralaminahamed/capture-images
 * */
 
-import {app,today} from "./db";
+//External dependencies
+import {types} from "sass";
+import String = types.String;
+import * as util from "util";
+//External dependencies
+import {app, today} from "./db";
 
 /*required variables*/
 export const appTracker = app.about.short_name + '@' + app.about.version;
@@ -19,6 +24,7 @@ globalAppMonitorURL = 'https://www.mishusoft.com/monitor/browser/';
 /*#!else*/
 globalAppMonitorURL = 'http://localhost/monitor/browser/';
 /*#!endif*/
+
 /*required variables*/
 
 
@@ -31,16 +37,39 @@ export function IsJsonString(str: string) {
     return true;
 }
 
-export function createElement(name : string, attributes: any) {
-    let element, attr;
-    element = document.createElement(name);
-    if (attributes.length !== 0){
-        for (attr in attributes) {
-            element.setAttribute(attr, attributes[attr]);
+export function createElement(name: string, attributes: any) {
+    let element = document.createElement(name);
+    return assignAttributes(element, attributes);
+}
+
+export function assignAttributes(element: HTMLElement, attributes: any) {
+    if (attributes.length !== 0) {
+        for (let attr in attributes) {
+            if (attr === 'text') {
+                element.innerText = attributes[attr]
+            } else if (attr === 'html') {
+                element.innerHTML = attributes[attr]
+            } else if (attr === 'child') {
+                if (attributes[attr].length !== 0){
+                    //createElement('div', {attr:v, attr:v, child:['div':[{'att':1}]]})
+                    for (let child in attributes[attr]){
+                        if (typeof attributes[attr][child] === 'object'){
+                            for (let childItem in attributes[attr][child]){
+                                createElement(childItem, attributes[attr][child][childItem])
+                            }
+                        }
+                        if (typeof attributes[attr][child] === 'string'){
+                            createElement(child, attributes[attr][child])
+                        }
+                    }
+                }
+            } else {
+                element.setAttribute(attr, attributes[attr]);
+            }
         }
     }
 
-    return (element as HTMLElement);
+    return element;
 }
 
 export function captureElement(selectors: string): any {
@@ -49,17 +78,6 @@ export function captureElement(selectors: string): any {
     }
 }
 
-export function captureElementByClassName(ClassName: string): any {
-    if (document.querySelector('.' + ClassName) !== null) {
-        return document.querySelector('.' + ClassName) as HTMLElement;
-    }
-}
-
-export function captureElementByTagName(TagName: string): any {
-    if (document.querySelector(TagName) !== null) {
-        return document.querySelector(TagName) as HTMLElement;
-    }
-}
 
 export function sendRequest(options: any, callback?: any) {
     let dataType: any;
@@ -178,10 +196,10 @@ export function optimizeAppSettingObject(setting: { [p: string]: { [p: string]: 
                     if (__opt_Key === __obj_Key) {
                         item[__opt_Key].forEach(function (__opt_sub_key: string | number) {
                             Object.keys(setting[__obj_Key]).forEach(function (__obj_sub_key) {
-                                if (__opt_sub_key !== __obj_sub_key && __obj_sub_key ==='') {
+                                if (__opt_sub_key !== __obj_sub_key && __obj_sub_key === '') {
                                     /*console.log("__opt_sub_key undefined...");
                                     console.log(__opt_sub_key);*/
-                                    if (fallbackFn){
+                                    if (fallbackFn) {
                                         return fallbackFn();
                                     }
                                 } /*else {

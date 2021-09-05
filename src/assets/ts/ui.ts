@@ -4,42 +4,46 @@ import {
     createElement
 } from "./lib";
 
-
 if (captureElement('body')){
-    if (captureElement('#app-window-body') === undefined){
+    if (captureElement('#ci-window') === undefined){
 
         //application window
         let app = createElement('article', {
-            'id': 'app-window-body',
-            'class': 'row app-window-body animate'
+            'id': 'ci-window', 'class': 'app-window', 'style': 'display:none;'
         });
         captureElement('body').appendChild(app);
+
+        //application window
+        let section = createElement('section', {
+            'id': 'ci-body',
+            'class': 'row app-window-body animate'
+        });
+        app.appendChild(section);
 
         //sections of application
         //header section
         let header = createElement('header', {
-            'id': 'app-header',
+            'id': 'ci-header',
         });
-        app.appendChild(header);
+        section.appendChild(header);
 
         //application's logo
         let app_logo = createElement('img', {
-            'id': 'app-logo',
+            'id': 'ci-logo',
         });
         header.appendChild(app_logo);
 
         //application's title
         let app_title = createElement('p', {
-            'id': 'app-title',
+            'id': 'ci-title',
         });
         header.appendChild(app_title);
 
         //application's logo
         let app_close = createElement('div', {
-            'id': 'app-close',
+            'id': 'ci-close',
         });
         header.appendChild(app_close);
-
 
         console.log(captureElement('body'))
     }

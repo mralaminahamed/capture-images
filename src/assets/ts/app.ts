@@ -8,6 +8,7 @@
 
 import {browser} from "webextension-polyfill-ts";
 import {
+    assignAttributes,
     captureElement,
     createElement
 } from "./lib";
@@ -27,6 +28,11 @@ browser.runtime.onMessage.addListener(
         console.log(sender)
         addAppWindow();
         if (request.session === "makePopUp") {
+            //Add ui components for application
+            captureElement('#ci-title').src = request.title;
+            assignAttributes(captureElement('#ci-logo'), {src:request.logo, class:'ci-logo', alt:'capture image official logo'})
+            assignAttributes(captureElement('#ci-title'), {src:request.logo, class:'ci-logo', alt:'capture image official logo'})
+
             captureElement('#app-window').style.display = 'block';
             if (document.querySelectorAll('img').length !==0){
                 document.querySelectorAll('img').forEach(function (img) {
@@ -88,6 +94,10 @@ browser.runtime.onMessage.addListener(
         }
     }
 );
+
+if (document.querySelector('#ci-window')){
+    console.log(document.querySelector('#ci-window'))
+}
 
 /*@ts-ignore*/
 function addAppWindow(): any {

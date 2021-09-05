@@ -4,31 +4,26 @@
 * Website: https://www.mishusoft.com
 * Official Link: https://github.com/mralaminahamed/capture-images
 * */
-
-
+//External dependencies
 import {browser} from "webextension-polyfill-ts";
+//Internal dependencies
+import {createCaptureImageContextMenu, handleUpdateAvailable, sendCaptureImagesRequest} from "./lib.background";
 
-/*this extension main content*/
-browser.runtime.onInstalled.addListener(function() {
-    console.log(window.location)
-    browser.contextMenus.create({
-        "id": "captureImagesContextMenu",
-        "title": "Capture Images",
-        "contexts": ["page"]
-    });
-});
+
+/*add context menu*/
+browser.runtime.onInstalled.addListener(createCaptureImageContextMenu);
+
+//
+browser.storage.onChanged.addListener(() => {});
 
 //capture event on click context menu
 browser.contextMenus.onClicked.addListener(sendCaptureImagesRequest);
 //capture event on click action button
 browser.browserAction.onClicked.addListener(sendCaptureImagesRequest);
 
-function sendCaptureImagesRequest() {
-    browser.tabs.query({active: true, currentWindow: true}).then(function(tabs:any) {
-        console.log(tabs);
-        browser.tabs.sendMessage(tabs[0].id, {session: 'makePopUp'});
-    });
-}
+//make update
+browser.runtime.onUpdateAvailable.addListener(handleUpdateAvailable);
+
 
 
 
