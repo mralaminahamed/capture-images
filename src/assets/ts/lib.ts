@@ -6,10 +6,6 @@
 * */
 
 //External dependencies
-import {types} from "sass";
-import String = types.String;
-import * as util from "util";
-//External dependencies
 import {app, today} from "./db";
 
 /*required variables*/
