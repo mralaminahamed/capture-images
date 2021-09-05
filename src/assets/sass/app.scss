@@ -2,18 +2,23 @@
 @import "./lib";
 @import "./functions";
 
+* {
+  margin: 0;
+  padding: 0;
+}
+
 
 body {
   min-width: range(450) !important;
 }
 
-.box-shadow {
+.ci-box-shadow {
   -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 }
 
-.app {
+.ci {
   padding: var(range10);
   /*overflow: scroll;*/
   background-color: var(deepBlackBlue);
@@ -21,6 +26,9 @@ body {
   border-radius: var(range10);
 
   &-window {
+
+    font-family: var(--font-family-sans-serif);
+
     /*display: none;*/
     /* Hidden by default */
     position: fixed; /* Stay in place */
@@ -41,7 +49,7 @@ body {
       margin: auto;
       padding: 0;
       border: 2px solid var(--rootColorBlue);
-      width: 750px;
+      width: 780px;
       -webkit-border-radius: 10px;
       -moz-border-radius: 10px;
       border-radius: 10px;
@@ -187,7 +195,7 @@ body {
 }
 
 
-.app-select {
+.ci-select {
   height: 35px;
   padding: .5em .6em;
   margin-right: 5px;
@@ -231,25 +239,46 @@ body {
   margin-bottom: 5px;
 }
 
-.appTitleBar {
+.ci-header {
   width: 100%;
   color: black;
   font-size: 28px;
   font-weight: bold;
   padding: 10px 0;
   border-bottom: 5px solid #53b5e5;
-  display: inline-block;
+
+  display: inline-flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  -o-flex-direction: row;
+  -khtml-flex-direction: row;
+  flex-direction: row;
+  align-items: center;
 }
 
-.appTitleText {
-  float: left;
-  text-align: center;
-  left: 10%;
-  position: relative;
-  display: block;
+.ci-title {
+  display: flex;
+  align-items: center;
+  -webkit-justify-content: flex-start;
+  -ms-justify-content: flex-start;
+  -o-justify-content: flex-start;
+  -khtml-justify-content: flex-start;
+  justify-content: flex-start;
 }
 
-.app-search-box {
+
+.ci-logo {
+  width: 40px;
+  height: 40px;
+
+  margin: 0 10px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ci-search-box {
   float: left;
   left: 37%;
   display: block;
@@ -261,10 +290,9 @@ body {
 }
 
 
-.appTitleSymbol {
-  float: right;
-  position: relative;
-  right: 10px;
+.ci-close {
+  position: absolute;
+  right: 20px;
   font-size: 16px;
   border: 2px solid var(--red);
   border-radius: 50%;
@@ -277,13 +305,14 @@ body {
   user-select: none;
   -webkit-user-select: none;
   -ms-user-select: none;
+
+  &:hover{
+    cursor: pointer;
+  }
 }
 
-.appTitleSymbol:hover {
-  cursor: pointer;
-}
 
-.setting-app-body {
+.ci-setting-body {
   display: inline-block;
   text-align: left !important;
   margin: 0;
@@ -291,7 +320,7 @@ body {
   width: 100%;
 }
 
-.setting-app-body-content {
+.ci-setting-body-content {
   float: left;
   text-align: left !important;
   margin: 0;

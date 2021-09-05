@@ -29,11 +29,12 @@ browser.runtime.onMessage.addListener(
         addAppWindow();
         if (request.session === "makePopUp") {
             //Add ui components for application
-            captureElement('#ci-title').src = request.title;
+            assignAttributes(captureElement('#ci-header'), {class:'ci-header'})
             assignAttributes(captureElement('#ci-logo'), {src:request.logo, class:'ci-logo', alt:'capture image official logo'})
-            assignAttributes(captureElement('#ci-title'), {src:request.logo, class:'ci-logo', alt:'capture image official logo'})
+            assignAttributes(captureElement('#ci-title'), {text:request.title, class:'ci-title', title:'Capture Images'})
+            assignAttributes(captureElement('#ci-close'), {text:'x', class:'ci-close', title:'Click to close'})
 
-            captureElement('#app-window').style.display = 'block';
+            captureElement('#ci-window').style.display = 'block';
             if (document.querySelectorAll('img').length !==0){
                 document.querySelectorAll('img').forEach(function (img) {
                     console.log(img);

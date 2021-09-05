@@ -15,27 +15,34 @@ html:root {
   --lightgrey: #d3d3d3;
   --grey: #808080;
   --darkorchid: #9932CC;
-  --fontFamily: 'Arial, Helvetica, sans-serif, "courier new", "times new roman", fixed, monospace';
+  --font-family-sans-serif: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji",SourceSansPro,SolaimanLipi;
+  --font-family-monospace: SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
+}
+
+* {
+  margin: 0;
+  padding: 0;
 }
 
 body {
   min-width: 28.125rem !important;
 }
 
-.box-shadow {
+.ci-box-shadow {
   -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 }
 
-.app {
+.ci {
   padding: var(range10);
   /*overflow: scroll;*/
   background-color: var(deepBlackBlue);
   box-sizing: border-box;
   border-radius: var(range10);
 }
-.app-window {
+.ci-window {
+  font-family: var(--font-family-sans-serif);
   /*display: none;*/
   /* Hidden by default */
   position: fixed;
@@ -58,13 +65,13 @@ body {
   background-color: rgba(0, 0, 0, 0.4);
   /* Black w/ opacity */
 }
-.app-window-body {
+.ci-window-body {
   position: relative;
   background-color: #fefefe;
   margin: auto;
   padding: 0;
   border: 2px solid var(--rootColorBlue);
-  width: 750px;
+  width: 780px;
   -webkit-border-radius: 10px;
   -moz-border-radius: 10px;
   border-radius: 10px;
@@ -76,7 +83,7 @@ body {
   animation-name: animatetop;
   animation-duration: 0.4s;
 }
-.app-button {
+.ci-button {
   height: 2.1875rem;
   display: inline-block;
   margin: 0.3125rem;
@@ -95,71 +102,71 @@ body {
   -o-transition: all 0.15s ease;
   transition: all 0.15s ease;
 }
-.app-button:disabled {
+.ci-button:disabled {
   color: var(--black);
   cursor: not-allowed;
   border: 2px solid var(--lightgrey);
   background-color: var(--white);
 }
-.app-button:disabled:hover {
+.ci-button:disabled:hover {
   color: var(--black);
   cursor: not-allowed;
   border: 2px solid var(--lightgrey);
   background-color: var(--white);
 }
-.app-button-outline-primary {
+.ci-button-outline-primary {
   border: 2px solid var(--rootColorBlue);
   background-color: var(--white);
   cursor: pointer;
 }
-.app-button-outline-primary:hover {
+.ci-button-outline-primary:hover {
   color: var(--white);
   background-color: var(--rootColorBlue);
 }
-.app-button-outline-danger {
+.ci-button-outline-danger {
   color: var(--black);
   border: 2px solid var(--red);
   background-color: var(--white);
 }
-.app-button-outline-danger:hover {
+.ci-button-outline-danger:hover {
   color: var(--white);
   background-color: var(--red);
 }
-.app-button-outline-success {
+.ci-button-outline-success {
   color: var(--black);
   border: 2px solid #4caf50;
   /* Green */
   background-color: var(--white);
 }
-.app-button-outline-success:hover {
+.ci-button-outline-success:hover {
   color: var(--white);
   background-color: var(--green);
   cursor: pointer;
 }
-.app-company-text {
+.ci-company-text {
   font-size: 15px;
   text-decoration: none;
   color: #53b5e5;
 }
-.app-company-text:hover {
+.ci-company-text:hover {
   color: #93c;
 }
-.app-company-declaimer {
+.ci-company-declaimer {
   font-size: 13px;
   line-height: 1.35;
   text-align: justify;
 }
-.app-company-declaimer::selection {
+.ci-company-declaimer::selection {
   user-select: none;
   -ms-user-select: none;
   -webkit-user-select: none;
 }
-.app-loader {
+.ci-loader {
   cursor: progress;
   width: 6.25rem;
   height: 6.25rem;
 }
-.app-loader-box {
+.ci-loader-box {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -169,7 +176,7 @@ body {
   border-radius: 50%;
   /*shadow dropped*/
 }
-.app-setting-button {
+.ci-setting-button {
   color: #53b5e5;
   top: 30px !important;
   right: 3% !important;
@@ -186,7 +193,7 @@ body {
   cursor: pointer;
 }
 
-.app-select {
+.ci-select {
   height: 35px;
   padding: 0.5em 0.6em;
   margin-right: 5px;
@@ -227,25 +234,42 @@ body {
   margin-bottom: 5px;
 }
 
-.appTitleBar {
+.ci-header {
   width: 100%;
   color: black;
   font-size: 28px;
   font-weight: bold;
   padding: 10px 0;
   border-bottom: 5px solid #53b5e5;
-  display: inline-block;
+  display: inline-flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  -o-flex-direction: row;
+  -khtml-flex-direction: row;
+  flex-direction: row;
+  align-items: center;
 }
 
-.appTitleText {
-  float: left;
-  text-align: center;
-  left: 10%;
-  position: relative;
-  display: block;
+.ci-title {
+  display: flex;
+  align-items: center;
+  -webkit-justify-content: flex-start;
+  -ms-justify-content: flex-start;
+  -o-justify-content: flex-start;
+  -khtml-justify-content: flex-start;
+  justify-content: flex-start;
 }
 
-.app-search-box {
+.ci-logo {
+  width: 40px;
+  height: 40px;
+  margin: 0 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ci-search-box {
   float: left;
   left: 37%;
   display: block;
@@ -256,10 +280,9 @@ body {
   padding: 2px 4px;
 }
 
-.appTitleSymbol {
-  float: right;
-  position: relative;
-  right: 10px;
+.ci-close {
+  position: absolute;
+  right: 20px;
   font-size: 16px;
   border: 2px solid var(--red);
   border-radius: 50%;
@@ -273,12 +296,11 @@ body {
   -webkit-user-select: none;
   -ms-user-select: none;
 }
-
-.appTitleSymbol:hover {
+.ci-close:hover {
   cursor: pointer;
 }
 
-.setting-app-body {
+.ci-setting-body {
   display: inline-block;
   text-align: left !important;
   margin: 0;
@@ -286,7 +308,7 @@ body {
   width: 100%;
 }
 
-.setting-app-body-content {
+.ci-setting-body-content {
   float: left;
   text-align: left !important;
   margin: 0;

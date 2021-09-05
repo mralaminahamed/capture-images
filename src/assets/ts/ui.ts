@@ -9,14 +9,14 @@ if (captureElement('body')){
 
         //application window
         let app = createElement('article', {
-            'id': 'ci-window', 'class': 'app-window', 'style': 'display:none;'
+            'id': 'ci-window', 'class': 'ci-window', 'style': 'display:none;'
         });
         captureElement('body').appendChild(app);
 
         //application window
         let section = createElement('section', {
             'id': 'ci-body',
-            'class': 'row app-window-body animate'
+            'class': 'row ci-window-body animate'
         });
         app.appendChild(section);
 
@@ -34,7 +34,7 @@ if (captureElement('body')){
         header.appendChild(app_logo);
 
         //application's title
-        let app_title = createElement('p', {
+        let app_title = createElement('h1', {
             'id': 'ci-title',
         });
         header.appendChild(app_title);
