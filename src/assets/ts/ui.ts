@@ -9,7 +9,7 @@ if (captureElement('body')){
 
         //application window
         let app = createElement('article', {
-            'id': 'ci-window', 'class': 'ci-window', 'style': 'display:none;'
+            'id': 'ci-window', 'class': 'ci-window', 'style': 'display:none !important;'
         });
         captureElement('body').appendChild(app);
 

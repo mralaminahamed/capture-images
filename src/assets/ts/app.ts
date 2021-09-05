@@ -28,19 +28,22 @@ browser.runtime.onMessage.addListener(
         console.log(sender)
         addAppWindow();
         if (request.session === "makePopUp") {
-            //Add ui components for application
-            assignAttributes(captureElement('#ci-header'), {class:'ci-header'})
-            assignAttributes(captureElement('#ci-logo'), {src:request.logo, class:'ci-logo', alt:'capture image official logo'})
-            assignAttributes(captureElement('#ci-title'), {text:request.title, class:'ci-title', title:'Capture Images'})
-            assignAttributes(captureElement('#ci-close'), {text:'x', class:'ci-close', title:'Click to close'})
+            if (document.readyState === 'complete'){
+                //Add ui components for application
+                assignAttributes(captureElement('#ci-header'), {class:'ci-header'});
+                assignAttributes(captureElement('#ci-logo'), {src:request.logo, class:'ci-logo', alt:'capture image official logo'});
+                assignAttributes(captureElement('#ci-title'), {text:request.title, class:'ci-title', title:'Capture Images'});
+                assignAttributes(captureElement('#ci-close'), {text:'x', class:'ci-close', title:'Click to close'});
 
-            captureElement('#ci-window').style.display = 'block';
-            if (document.querySelectorAll('img').length !==0){
-                document.querySelectorAll('img').forEach(function (img) {
-                    console.log(img);
-                });
-            }
-            //alert(request);
+
+
+                captureElement('#ci-window').style.display = 'block';
+                if (document.querySelectorAll('img').length !==0){
+                    document.querySelectorAll('img').forEach(function (img) {
+                        console.log(img);
+                    });
+                }
+                //alert(request);
 
                 /*let capture_images_app:any = document.getElementById('captured-images-viewer');
               /*if (capture_images_app.style.display !== 'block'){
@@ -75,23 +78,26 @@ browser.runtime.onMessage.addListener(
                     window.location.reload();
                 }*/
 
-            (function () {
-                let coll = document.getElementsByClassName("coll-image");
-                let i;
-                for (i = 0; i < coll.length; i++) {
-                    coll[i].addEventListener("click", function () {
-                        //console.log(this);
-                        const a = document.createElement("a");
-                        a.style.display = "none";
-                        document.body.appendChild(a);
-                        a.setAttribute("download", '');
-                        a.href = this.src;
-                        a.click();
-                        document.body.removeChild(a);
-                    });
-                }
-            }());
-            return Promise.resolve('downloaded');
+                (function () {
+                    let coll = document.getElementsByClassName("coll-image");
+                    let i;
+                    for (i = 0; i < coll.length; i++) {
+                        coll[i].addEventListener("click", function () {
+                            //console.log(this);
+                            const a = document.createElement("a");
+                            a.style.display = "none";
+                            document.body.appendChild(a);
+                            a.setAttribute("download", '');
+                            a.href = this.src;
+                            a.click();
+                            document.body.removeChild(a);
+                        });
+                    }
+                }());
+                return Promise.resolve('downloaded');
+            } else {
+                alert('Please  until page load complete.')
+            }
         }
     }
 );
@@ -148,8 +154,8 @@ async function globalEventControllers(component: string) {
 
         /*console.log('set event for app-close-button action');
         console.log(captureElement('-app-close-button'));*/
-        captureElement('#app-close-button').addEventListener('click', function () {
-            captureElement('#app-window').style.display = 'none';
+        captureElement('#ci-close').addEventListener('click', function () {
+            captureElement('#ci-window').style.display = 'none';
         });
 
         /*console.log('set event for setting-get-a-licence action');
