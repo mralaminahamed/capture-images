@@ -11,7 +11,7 @@
     "start": "webpack && web-ext run",
     "watch": "webpack -w",
     "watch:chrome": "webpack -w --env.target=chrome",
-    "update-addon": "node ./src/utils/update-addon.js",
+    "update-addon": "node ./src/utils/update-addon",
     "update-version": "node ./src/utils/sync-app-version",
     "zip-src": "node ./src/utils/zip-src",
     "packages:outdated": "npm outdated",
@@ -27,6 +27,7 @@
   "author": "Al-Amin Ahamed",
   "license": "ISC",
   "devDependencies": {
+    "@types/archiver": "^5.1.1",
     "@types/sass": "^1.16.0",
     "autoprefixer": "^9.8.4",
     "clean-webpack-plugin": "^3.0.0",
@@ -58,8 +59,11 @@
     "sourceDir": "dist-firefox"
   },
   "dependencies": {
+    "@types/semver": "^7.3.8",
+    "@types/semver-utils": "^1.1.1",
     "archiver": "^4.0.1",
     "html-webpack-include-assets-plugin": "^2.0.0",
+    "semver-utils": "^1.1.4",
     "web-ext": "^6.1.0",
     "webrtc-adapter": "^7.6.1"
   }
