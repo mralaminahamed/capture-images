@@ -15,7 +15,7 @@ export const app = {
         "short_name": "CaptureImages",
         "name_spaced": "Capture Images",
         "total_users": "380",
-        "version": "0.4.0",
+        "version": "1.0.0",
     },
     "website": {
         "home": "https://www.mishusoft.com/",
