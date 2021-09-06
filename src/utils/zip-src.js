@@ -5,97 +5,97 @@ const fs = require('fs');
 const DEST_DIR = path.join(__dirname, '../..', 'dist-src');
 
 async function main() {
-  console.log('Creating dest directory...');
-  await ensureDir(DEST_DIR);
+    console.log('Creating dest directory...');
+    await ensureDir(DEST_DIR);
 
-  const versionString = getPackageVersion();
-  const zipFilename = `acs-pro-${versionString}-src.zip`;
-  console.log(`Writing to ${zipFilename}...`);
+    const versionString = getPackageVersion();
+    const zipFilename = `acs-pro-${versionString}-src.zip`;
+    console.log(`Writing to ${zipFilename}...`);
 
-  const zipPath = path.join(DEST_DIR, zipFilename);
-  if (fs.existsSync(zipPath)) {
-    console.log('(Replacing existing file)');
-    fs.unlinkSync(zipPath);
-  }
-
-  const zipFile = fs.createWriteStream(path.join(DEST_DIR, zipFilename));
-
-  const archive = archiver('zip', {
-    zlib: { level: 9 },
-  });
-
-  archive.on('warning', err => {
-    if (err.code === 'ENOENT') {
-      console.warn('File not found');
-      console.warn(err);
-    } else {
-      throw err;
+    const zipPath = path.join(DEST_DIR, zipFilename);
+    if (fs.existsSync(zipPath)) {
+        console.log('(Replacing existing file)');
+        fs.unlinkSync(zipPath);
     }
-  });
 
-  archive.on('error', function(err) {
-    throw err;
-  });
+    const zipFile = fs.createWriteStream(path.join(DEST_DIR, zipFilename));
 
-  const finishWritePromise = new Promise(resolve => {
-    archive.on('close', resolve);
-  });
+    const archive = archiver('zip', {
+        zlib: {level: 9},
+    });
 
-  archive.pipe(zipFile);
+    archive.on('warning', (err) => {
+        if (err.code === 'ENOENT') {
+            console.warn('File not found');
+            console.warn(err);
+        } else {
+            throw err;
+        }
+    });
 
-  const rootDir = path.join(__dirname, '../..');
+    archive.on('error', function (err) {
+        throw err;
+    });
 
-  const dirs = [
-    'src',
-    'tests',
-  ];
-  for (const dir of dirs) {
-    archive.directory(path.join(rootDir, dir), dir);
-  }
+    const finishWritePromise = new Promise(resolve => {
+        archive.on('close', resolve);
+    });
 
-  const files = [
-    'package.json',
-    'package-lock.json',
-    'webpack.config.js',
-    'tsconfig.json',
-  ];
-  for (const file of files) {
-    archive.file(path.join(rootDir, file), { name: file });
-  }
+    archive.pipe(zipFile);
 
-  archive.finalize();
+    const rootDir = path.join(__dirname, '../..');
 
-  await finishWritePromise;
+    const dirs = [
+        'src',
+        'tests',
+    ];
+    for (const dir of dirs) {
+        archive.directory(path.join(rootDir, dir), dir);
+    }
 
-  console.log(`Wrote ${archive.pointer()} bytes`);
+    const files = [
+        'package.json',
+        'package-lock.json',
+        'webpack.config.js',
+        'tsconfig.json',
+    ];
+    for (const file of files) {
+        archive.file(path.join(rootDir, file), {name: file});
+    }
+
+    archive.finalize();
+
+    await finishWritePromise;
+
+    console.log(`Wrote ${archive.pointer()} bytes`);
 }
 
 async function ensureDir(dir) {
-  return new Promise((resolve, reject) => {
-    fs.mkdir(dir, { recursive: true }, err =>
-      err && err.code !== 'EEXIST' ? reject(err) : resolve()
-    );
-  });
+    return new Promise((resolve, reject) => {
+        fs.mkdir(dir, {recursive: true}, (err) =>
+            err && err.code !== 'EEXIST' ? reject(err) : resolve()
+        );
+    });
 }
 
 function getPackageVersion() {
-  const packageJson = JSON.parse(
-    fs.readFileSync(path.join(__dirname, '../..', 'package.json'), 'utf8')
-  );
-  const versionString = packageJson.version;
-  if (!versionString) {
-    throw new Error('Could not find version in package.json');
-  }
+    const packageJson = JSON.parse(
+        fs.readFileSync(path.join(__dirname, '../..', 'package.json'), 'utf8')
+    );
+    const versionString = packageJson.version;
+    if (!versionString) {
+        throw new Error('Could not find version in package.json');
+    }
 
-  return versionString;
+    return versionString;
 }
 
 main()
-  .then(() => {
-    console.log('Done.');
-    process.exit(0);
-  })
-  .catch(err => {
-    console.error(err);
-    process.exit(1);
-  });
+    .then(() => {
+        console.log('Done.');
+        process.exit(0);
+    })
+    .catch(err => {
+        console.error(err);
+        process.exit(1);
+    });
