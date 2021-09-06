@@ -53,3 +53,34 @@
   }
 
 }
+
+@mixin box-shadow($h-offset, $v-offset, $blur, $spread, $color, $position){
+  -webkit-box-shadow: $position $h-offset $v-offset $blur $color;
+  -moz-box-shadow: $position $h-offset $v-offset $blur $color;
+  box-shadow: $position $h-offset $v-offset $blur $color;
+}
+
+@mixin box-shadow-plain($pain-text){
+  -webkit-box-shadow: $pain-text;
+  -moz-box-shadow: $pain-text;
+  box-shadow: $pain-text;
+}
+
+@mixin border-radius($length){
+  -webkit-border-radius: $length;
+  -moz-border-radius: $length;
+  border-radius: $length;
+}
+
+@mixin transition($property, $time, $function){
+  -webkit-transition: $property $time $function;
+  -moz-transition: $property $time $function;
+  -o-transition: $property $time $function;
+  transition: $property $time $function;
+}
+
+@mixin user-select($value){
+  user-select: $value;
+  -ms-user-select: $value;
+  -webkit-user-select: $value;
+}

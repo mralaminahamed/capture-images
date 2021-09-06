@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "module": "esnext",
+    "module": "esNext",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "moduleResolution": "node",
@@ -12,7 +12,7 @@
     "sourceMap": true,
     "strictNullChecks": true,
     "lib": ["DOM"],
-    "target": "es2017",
+    "target": "esNext",
     "typeRoots": ["node_modules/@types","node_modules/web-ext-types"/*,"src/common.d.ts"*/]
   },
   "include": [
