@@ -1,8 +1,8 @@
-const fs = require('fs');
-const path = require('path');
-const {parseSemVer} = require('semver-parser');
+const fs = require( 'fs');
+const path = require( 'path');
+const {parse} = require( 'semver-utils');
 
-function main() {
+(function () {
     console.log('Reading version number in package...');
 
     // Read version
@@ -17,19 +17,18 @@ function main() {
     console.log(`  Version in package.json: ${packageJson.version}`);
 
     // Parse it
-    const {major, minor, patch, pre, matches} =
-        parseSemVer(originalVersionString);
-    if (!matches) {
-        console.error(`Could not parse version ${originalVersionString}`);
-        process.exit(1);
-    }
+    const {major, minor, patch, release} = parse(originalVersionString);
+    // if (!matches) {
+    //     console.error(`Could not parse version ${originalVersionString}`);
+    //     process.exit(1);
+    // }
 
 
     console.log('Synchronizing version number in manifest...');
     // Generate updated version info
-    const manifestVersionInfo = pre
+    const manifestVersionInfo = release
         ? `/*#if supports_alpha_version*/
-  "version": "${major}.${minor}.${patch}${pre}",
+  "version": "${major}.${minor}.${patch}${release}",
   /*#else*/
   "version": "${major}.${minor}.${patch}",
   "version_name": "${originalVersionString}",
@@ -56,8 +55,8 @@ function main() {
 
     console.log('Synchronizing version number in DB...');
     // Generate updated version info
-    const dbVersionInfo = pre
-        ? `"version": "${major}.${minor}.${patch}${pre}"`
+    const dbVersionInfo = release
+        ? `"version": "${major}.${minor}.${patch}${release}"`
         : `"version": "${major}.${minor}.${patch}",`;
 
     // Update the DB
@@ -76,6 +75,4 @@ function main() {
     // Write the result
     fs.writeFileSync(dbPath, updatedDbSrc, 'utf8');
     console.log(`  Wrote result to ${dbPath}`);
-}
-
-main();
+})()
