@@ -4,7 +4,7 @@
   "short_name": "Capture Images",
   "author": "Al-Amin Ahamed",
   "homepage_url": "https://github.com/mralaminahamed/capture-images",
-  "version": "0.4.0",
+  "version": "1.0.0",
   "default_locale": "en",
   /*#!if browser_specific_settings===true*/
   "browser_specific_settings": {
