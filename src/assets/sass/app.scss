@@ -293,6 +293,13 @@ body {
   cursor: pointer;
   @include user-select(none);
 
+  //padding: 5px 15px;
+  //background: red;
+  //color: white;
+  //margin-right: 5px;
+  //cursor: pointer;
+  //border-radius: 90px;
+
   &:hover{
     cursor: pointer;
   }
