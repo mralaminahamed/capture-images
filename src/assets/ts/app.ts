@@ -146,10 +146,10 @@ async function globalEventControllers(component: string) {
 
         /*console.log('set event for app-setting-opener action');
         console.log(document.querySelector('#app-setting-button'));*/
-        captureElement('#app-setting-button')?.addEventListener('click', function () {
+       // captureElement('#app-setting-button')?.addEventListener('click', function () {
             /*console.info('preparing to send data request');*/
             /*console.info('send data request');*/
-        });
+        //});
 
 
         /*console.log('set event for app-close-button action');

@@ -54,33 +54,38 @@
 
 }
 
+@mixin prefix($property, $value, $prefixes) {
+  @each $prefix in $prefixes {
+    -#{$prefix}-#{$property}: $value;
+  }
+  #{$property}: $value;
+}
+
+//@include prefix(filter, grayscale(50%), moz webkit);
+
 @mixin box-shadow($h-offset, $v-offset, $blur, $spread, $color, $position){
+ // @include prefix(box-shadow, $h-offset $v-offset $blur $spread $color $position, moz webkit);
   -webkit-box-shadow: $position $h-offset $v-offset $blur $color;
   -moz-box-shadow: $position $h-offset $v-offset $blur $color;
   box-shadow: $position $h-offset $v-offset $blur $color;
 }
 
 @mixin box-shadow-plain($pain-text){
-  -webkit-box-shadow: $pain-text;
-  -moz-box-shadow: $pain-text;
-  box-shadow: $pain-text;
+  @include prefix(box-shadow, $pain-text, moz webkit);
 }
 
 @mixin border-radius($length){
-  -webkit-border-radius: $length;
-  -moz-border-radius: $length;
-  border-radius: $length;
+  @include prefix(border-radius, $length, moz webkit);
 }
 
 @mixin transition($property, $time, $function){
-  -webkit-transition: $property $time $function;
-  -moz-transition: $property $time $function;
-  -o-transition: $property $time $function;
-  transition: $property $time $function;
+  @include prefix(transition, $property $time $function, o moz webkit);
 }
 
 @mixin user-select($value){
-  user-select: $value;
-  -ms-user-select: $value;
-  -webkit-user-select: $value;
+  @include prefix(user-select, $value, ms webkit);
 }
+
+
+
+//Animations
