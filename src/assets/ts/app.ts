@@ -45,38 +45,38 @@ browser.runtime.onMessage.addListener(
                 }
                 //alert(request);
 
-                /*let capture_images_app:any = document.getElementById('captured-images-viewer');
-              /*if (capture_images_app.style.display !== 'block'){
-                    capture_images_app.style = 'display:block';
-                    document.getElementById('viewer-close')?.addEventListener('click', function () {
-                        capture_images_app.style = 'display:none';
-                    });
-
-                    let coll_img:any = '';
-                    let images_div:any = document.getElementById('images-div');
-                    let achor:any = document.getElementsByTagName('a');
-                    for (let i = 0; i < achor.length; i++) {
-                        let ext_exists_point = achor[i].href.search('.jpg' || '.jpeg' || '.png' || '.gif');
-                        let coll_ext_text = achor[i].href.substr(ext_exists_point, (achor[i].href.length - ext_exists_point));
-                        if (ext_exists_point !== -1 && coll_ext_text === '.jpg' || coll_ext_text === '.jpeg' || coll_ext_text === '.png' || coll_ext_text === '.gif') {
-                            //img_count += i;
-                            coll_img = document.createElement('img');
-                            coll_img.setAttribute('src', achor[i].href);
-                            coll_img.setAttribute('id', 'coll_images');
-                            coll_img.setAttribute('class', 'coll-image');
-                            coll_img.setAttribute('alt', 'Photo');
-                            coll_img.setAttribute('title', 'Click to download');
-                            images_div.appendChild(coll_img);
-                        }
-                    }
-                    if (coll_img === ''){
-                        images_div.textContent = 'No image found..';
-                    }
-
-                } else {
-                    alert('Please reload this page');
-                    window.location.reload();
-                }*/
+              //   let capture_images_app:any = document.getElementById('captured-images-viewer');
+              // if (capture_images_app.style.display !== 'block'){
+              //       capture_images_app.style = 'display:block';
+              //       document.getElementById('viewer-close')?.addEventListener('click', function () {
+              //           capture_images_app.style = 'display:none';
+              //       });
+              //
+              //       let coll_img:any = '';
+              //       let images_div:any = document.getElementById('images-div');
+              //       let achor:any = document.getElementsByTagName('a');
+              //       for (let i = 0; i < achor.length; i++) {
+              //           let ext_exists_point = achor[i].href.search('.jpg' || '.jpeg' || '.png' || '.gif');
+              //           let coll_ext_text = achor[i].href.substr(ext_exists_point, (achor[i].href.length - ext_exists_point));
+              //           if (ext_exists_point !== -1 && coll_ext_text === '.jpg' || coll_ext_text === '.jpeg' || coll_ext_text === '.png' || coll_ext_text === '.gif') {
+              //               //img_count += i;
+              //               coll_img = document.createElement('img');
+              //               coll_img.setAttribute('src', achor[i].href);
+              //               coll_img.setAttribute('id', 'coll_images');
+              //               coll_img.setAttribute('class', 'coll-image');
+              //               coll_img.setAttribute('alt', 'Photo');
+              //               coll_img.setAttribute('title', 'Click to download');
+              //               images_div.appendChild(coll_img);
+              //           }
+              //       }
+              //       if (coll_img === ''){
+              //           images_div.textContent = 'No image found..';
+              //       }
+              //
+              //   } else {
+              //       alert('Please reload this page');
+              //       window.location.reload();
+              //   }
 
                 (function () {
                     let coll = document.getElementsByClassName("coll-image");
@@ -144,45 +144,45 @@ async function globalEventControllers(component: string) {
         /*console.log('set event for app-setting-button action');*/
 
 
-        /*console.log('set event for app-setting-opener action');
-        console.log(document.querySelector('#app-setting-button'));*/
-       // captureElement('#app-setting-button')?.addEventListener('click', function () {
+        // console.log('set event for app-setting-opener action');
+        // console.log(document.querySelector('#app-setting-button'));
+        //captureElement('#app-setting-button')?.addEventListener('click', function () {
             /*console.info('preparing to send data request');*/
             /*console.info('send data request');*/
-        //});
+       // });
 
 
-        /*console.log('set event for app-close-button action');
-        console.log(captureElement('-app-close-button'));*/
+        // console.log('set event for app-close-button action');
+        // console.log(captureElement('-app-close-button'));
         captureElement('#ci-close').addEventListener('click', function () {
             captureElement('#ci-window').style.display = 'none';
         });
 
-        /*console.log('set event for setting-get-a-licence action');
-        console.log(captureElement('setting-get-a-licence'));*/
+        // console.log('set event for setting-get-a-licence action');
+        // console.log(captureElement('setting-get-a-licence'));
 
         /*console.log('set event for nav action');*/
         /*console.log(captureElement('acsAppNavUL'));*/
         captureElement('.appNavUL').childNodes.forEach(function (element: HTMLElement) {
             const content = (element.id).substr(((element.id).indexOf('nav-') + "nav-".length), (element.id).length);
             element.addEventListener('click', function () {
-                /*const parentNavigatorId = element.id;
-                console.log(element.id)
-                console.log(content)*/
+                // const parentNavigatorId = element.id;
+                // console.log(element.id)
+                // console.log(content)
                 if (content) {
                     captureElement('.setting-app-body-content').childNodes.forEach(function (element: HTMLElement) {
                         /*console.log(element)*/
                         if (element.id !== 'setting-app-content-' + content) {
                             /*captureElement(parentNavigatorId).removeAttribute('style');*/
                             element.style.display = 'none';
-                            /*console.log(element)
-                            console.log(captureElement(parentNavigatorId))*/
+                            // console.log(element)
+                            // console.log(captureElement(parentNavigatorId))
                         } else {
                             if (element.style.display === 'none') {
                                 element.style.display = 'block';
-                                /*captureElement(parentNavigatorId).setAttribute('style','background-color: #9932CC;cursor: pointer;');
-                                console.log(element)
-                                console.log(captureElement(parentNavigatorId))*/
+                                // captureElement(parentNavigatorId).setAttribute('style','background-color: #9932CC;cursor: pointer;');
+                                // console.log(element)
+                                // console.log(captureElement(parentNavigatorId))
                             }
                         }
                     });
@@ -199,11 +199,11 @@ async function globalEventControllers(component: string) {
 /*@ts-ignore*/
 function assembleUI() {
     /* attach external css file*/
-    /*let app_css_file = document.createElement('link');
-    app_css_file.setAttribute('type','text/css');
-    app_css_file.setAttribute('rel','stylesheet');
-    app_css_file.setAttribute('href',browser.runtime.getURL('assets/css/app.css'));
-    document.getElementsByTagName('head')[0].appendChild(app_css_file);*/
+    // let app_css_file = document.createElement('link');
+    // app_css_file.setAttribute('type','text/css');
+    // app_css_file.setAttribute('rel','stylesheet');
+    // app_css_file.setAttribute('href',browser.runtime.getURL('assets/css/app.css'));
+    // document.getElementsByTagName('head')[0].appendChild(app_css_file);
 
     let app_image_window = document.createElement('div');
     app_image_window.setAttribute('id', 'captured-images-viewer');
