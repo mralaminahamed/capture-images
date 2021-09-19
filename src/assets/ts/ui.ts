@@ -42,6 +42,10 @@ export class UI {
                 let app_close = createElement('div', {
                     'id': 'ci-close',
                 });
+                app_close.addEventListener('click',function (event) {
+                    event.preventDefault();
+                    ciApp.remove();
+                })
                 header.appendChild(app_close);
 
                 //application images body
