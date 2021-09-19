@@ -1,7 +1,13 @@
+//NodeJs dependencies
 const path = require('path');
+
+//webpack dependencies
+const ImageminPlugin = require('imagemin-webpack-plugin').default;
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const WebExtWebpackPlugin = require('web-ext-webpack-plugin');
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
+const RemoveEmptyScriptsPlugin = require('webpack-remove-empty-scripts')
 
 // Look for a --firefox <path> argument
 const firefoxIndex = process.argv.indexOf('--firefox');
@@ -21,25 +27,36 @@ const commonConfig = {
     context: path.resolve(__dirname, './src'),
     module: {
         rules: [
+            // compile sass, scss file
             {
-                test: /\.(css)$/,
+                test: /\.(sa|sc|c)ss$/i,
                 exclude: /node_modules/,
-                use: ["style-loader", "css-loader","postcss-loader"]
+                use: [
+                    // Minify compiled css files.
+                    MiniCssExtractPlugin.loader,
+                    // Translates CSS into CommonJS.
+                    'css-loader',
+                    // Load postcss.
+                    'postcss-loader',
+                    // Compiles Sass to CSS.
+                    'sass-loader'
+                ]
             },
+            //compile images
             {
-                test: /\.(scss|sass)$/,
-                exclude: /node_modules/,
-                use: ["style-loader", "css-loader", "sass-loader"]
+                test: /\.(jpe?g|png|gif)$/,
+                type: 'asset/resource',
+                generator: {
+                    filename: 'assets/images/[name][ext][query]'
+                },
             },
+            //compile webfonts
             {
-                test: /\.(svg|png|jpg|gif)$/,
-                use: {
-                    loader: "file-loader",
-                    options: {
-                        name: "[name].[ext]",
-                        outputPath: "assets/images/"
-                    }
-                }
+                test: /\.(ttf|otf|eot|svg|woff|woff2)$/,
+                type: 'asset/resource',
+                generator: {
+                    filename: 'assets/webfonts/[name].[hash][ext][query]'
+                },
             },
         ],
     },
@@ -48,13 +65,19 @@ const commonConfig = {
     },
     plugins: [
         new CleanWebpackPlugin(),
+        new RemoveEmptyScriptsPlugin(),
+        new MiniCssExtractPlugin({
+            filename: 'assets/css/[name].css',
+            chunkFilename: 'assets/css/[id].css'
+        }),
         new CopyWebpackPlugin({
             patterns: [
                 {from: './_locales/', to: './_locales/'},
-                {from: './assets/images/', to: './assets/images/[name].[ext]'},
-                {from: './assets/sass/app.css*', to: './assets/css/[name].[ext]'}
+                {from: './assets/images/', to: './assets/images/'},
+                //{from: './assets/sass/app.css*', to: './assets/css/[name][ext]'}
             ]
         }),
+        new ImageminPlugin({ test: /\.(jpe?g|png|gif|svg)$/i }),
     ],
 }
 
@@ -64,7 +87,7 @@ const commonExtConfig = {
         'manifest.json': './manifest.json.src',
         'content': './assets/ts/app.ts',
         'background': './assets/ts/background.ts',
-        'ui': './assets/ts/ui.ts',
+        'ui': ['./assets/ts/ui.ts','./assets/sass/app.scss'],
     }
 };
 
