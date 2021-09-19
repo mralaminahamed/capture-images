@@ -303,17 +303,20 @@ body {
   padding: 10px;
   display: inline flow-root list-item;
   list-style: none;
+  max-height: 700px;
+  overflow-y: scroll;
   /*& div + div {
     margin: 10px;
   }*/
 }
-.ci-container a {
+.ci-container div {
   margin: 0;
   display: flex;
   flex-direction: column;
   float: left;
+  cursor: pointer;
 }
-.ci-container a span {
+.ci-container div span {
   text-align: end;
   margin-bottom: -20px;
 }
