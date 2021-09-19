@@ -7,7 +7,7 @@
     "noImplicitAny": true,
     "noImplicitReturns": true,
     "noUnusedLocals": true,
-    "outDir": "extension",
+    "outDir": "extension/js",
     "pretty": true,
     "sourceMap": true,
     "strictNullChecks": true,
