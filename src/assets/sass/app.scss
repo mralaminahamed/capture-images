@@ -1,6 +1,7 @@
 /* src/assets/scss/app.scss */
 @import "./lib";
 @import "./functions";
+@import "./responsive";
 
 .ci-window * {
   margin: 0;
@@ -9,7 +10,7 @@
 
 
 body {
-  min-width: range(450) !important;
+  min-width: 450px !important;
 }
 
 .ci-box-shadow {
@@ -19,14 +20,13 @@ body {
 }
 
 .ci {
-  padding: var(range10);
+  padding: 10px;
   /*overflow: scroll;*/
   background-color: var(deepBlackBlue);
   box-sizing: border-box;
-  border-radius: var(range10);
+  @include border-radius(10px);
 
   &-window {
-
     font-family: var(--font-family-sans-serif);
 
     /*display: none;*/
@@ -40,16 +40,22 @@ body {
     width: 100%; /* Full width */
     height: 100%; /* Full height */
     overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0, 0, 0); /* Fallback color */
-    background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+    //background-color: rgb(0, 0, 0); /* Fallback color */
+    //background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
 
     &-body {
       position: relative;
       background-color: #fefefe;
       margin: auto;
-      border: 2px solid var(--rootColorBlue);
+      //border: 2px solid var(--rootColorBlue);
       width: 780px;
 
+      display: flex;
+      align-items: normal;
+      border: none;
+      flex-direction: column;
+
+      @include box-sizing(border-box);
       @include border-radius(10px);
       @include box-shadow-plain('0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)');
 
@@ -61,10 +67,10 @@ body {
   }
 
   &-button {
-    height: range(35);
+    height: 35px;
     display: inline-block;
-    margin: range(05);
-    padding: 0 range(20);
+    margin: 05px;
+    padding: 0 20px;
     text-align: center;
     text-decoration: none;
     font: bold 16px/26px Arial, sans-serif;
@@ -126,6 +132,176 @@ body {
 
   }
 
+  &-loader {
+    cursor: progress;
+    width: 100px;
+    height: 100px;
+
+    &-box {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      box-sizing: border-box;
+      @include border-radius(50%)
+    }
+  }
+
+  //class for selectors
+  &-select {
+    font-size: 100%;
+    font: 14px/26px Arial, sans-serif;
+
+    background-color: var(--white);
+
+    height: 35px;
+    padding: .5em .6em;
+    margin-right: 5px;
+    border: 2px solid var(--rootColorBlue);
+    display: inline-block;
+
+    @include border-radius(4px);
+    @include box-shadow(0, 1px, 3px, 0, var(--lightgrey), inset);
+  }
+
+  &-setting-button {
+    color: #53b5e5;
+    top: 30px !important;
+    right: 3% !important;
+    position: fixed;
+    width: 40px;
+    padding: 7px;
+    border: 7px solid #53b5e5;
+    height: 40px;
+    text-align: center;
+    font-weight: bold;
+    background-color: white;
+    cursor: pointer;
+    @include border-radius(50%);
+  }
+
+
+  &-header {
+    width: 100%;
+    color: black;
+    font-size: 24px;
+    font-weight: bold;
+    padding: 10px 0;
+    border-bottom: 5px solid #53b5e5;
+
+    display: inline-flex;
+    @include flex-direction(row);
+    @include align-items(center);
+    @include justify-content(start);
+  }
+
+  &-logo {
+    width: 40px;
+    height: 40px;
+
+    margin: 0 10px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &-title {
+    font-size: 30px;
+    font-weight: 800;
+    line-height: 1em;
+
+    margin-top: -10px;
+
+    display: flex;
+    @include align-items(center);
+    @include justify-content(flex-start);
+  }
+
+  &-search-box {
+    float: left;
+    left: 37%;
+    display: block;
+    position: relative;
+    margin: 1px;
+    width: 190px;
+    height: 35px;
+    padding: 2px 4px;
+  }
+
+  &-close {
+    position: absolute;
+    right: 20px;
+    font-size: 10px;
+    font-weight: bold;
+    text-align: center;
+    border: 2px solid var(--red);
+    width: 14px;
+    padding: 2px;
+    background-color: var(--white);
+    color: var(--red);
+    cursor: pointer;
+    @include border-radius(50%);
+    @include user-select(none);
+    @include box-sizing(content-box);
+
+    &:hover{
+      cursor: pointer;
+      background-color: var(--red);
+      color: white;
+    }
+  }
+
+  &-container {
+    padding: 10px;
+    display: inline flow-root list-item;
+    list-style: none;
+
+    & a {
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      float: left;
+
+      span {
+        text-align: end;
+        margin-bottom: -20px;
+      }
+      img {
+      }
+    }
+    /*& div + div {
+      margin: 10px;
+    }*/
+  }
+
+  &-footer {
+    font-family: var(--font-family-sans-serif);
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    margin: 10px 0;
+    padding: 10px 0;
+    border-top: 1px solid lightgray;
+  }
+
+
+  &-setting-body {
+    display: inline-block;
+    text-align: left !important;
+    margin: 0;
+    color: var(--black);
+    width: 100%;
+  }
+
+  &-setting-body-content {
+    float: left;
+    text-align: left !important;
+    margin: 0;
+    color: black;
+    width: 503px;
+  }
+
   &-company-text {
     font-size: 15px;
     text-decoration: none;
@@ -145,54 +321,6 @@ body {
       @include user-select(none)
     }
   }
-
-  &-loader {
-    cursor: progress;
-    width: range(100);
-    height: range(100);
-
-    &-box {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      box-sizing: border-box;
-      @include border-radius(50%)
-    }
-  }
-
-  &-setting-button {
-    color: #53b5e5;
-    top: 30px !important;
-    right: 3% !important;
-    position: fixed;
-    width: 40px;
-    padding: 7px;
-    border: 7px solid #53b5e5;
-    height: 40px;
-    text-align: center;
-    border-radius: 50%;
-    font-weight: bold;
-    background-color: white;
-    cursor: pointer;
-  }
-}
-
-
-.ci-select {
-  font-size: 100%;
-  font: 14px/26px Arial, sans-serif;
-
-  background-color: var(--white);
-
-  height: 35px;
-  padding: .5em .6em;
-  margin-right: 5px;
-  border: 2px solid var(--rootColorBlue);
-  display: inline-block;
-
-  @include border-radius(4px);
-  @include box-shadow(0, 1px, 3px, 0, var(--lightgrey), inset);
 }
 
 
@@ -224,103 +352,6 @@ body {
   margin-bottom: 5px;
 }
 
-.ci-header {
-  width: 100%;
-  color: black;
-  font-size: 28px;
-  font-weight: bold;
-  padding: 10px 0;
-  border-bottom: 5px solid #53b5e5;
-
-  display: inline-flex;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  -o-flex-direction: row;
-  -khtml-flex-direction: row;
-  flex-direction: row;
-  align-items: center;
-}
-
-.ci-title {
-  font-size: 30px;
-  font-weight: 800;
-  line-height: 1em;
-
-  display: flex;
-  align-items: center;
-  -webkit-justify-content: flex-start;
-  -ms-justify-content: flex-start;
-  -o-justify-content: flex-start;
-  -khtml-justify-content: flex-start;
-  justify-content: flex-start;
-}
-
-
-.ci-logo {
-  width: 40px;
-  height: 40px;
-
-  margin: 0 10px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.ci-search-box {
-  float: left;
-  left: 37%;
-  display: block;
-  position: relative;
-  margin: 1px;
-  width: 190px;
-  height: 35px;
-  padding: 2px 4px;
-}
-
-
-.ci-close {
-  position: absolute;
-  right: 20px;
-  font-size: 16px;
-  border: 2px solid var(--red);
-  border-radius: 50%;
-  width: 20px;
-  height: 20px;
-  padding: 0 0 2px 4px;
-  background-color: var(--red);
-  color: white;
-  cursor: pointer;
-  @include user-select(none);
-
-  //padding: 5px 15px;
-  //background: red;
-  //color: white;
-  //margin-right: 5px;
-  //cursor: pointer;
-  //border-radius: 90px;
-
-  &:hover{
-    cursor: pointer;
-  }
-}
-
-
-.ci-setting-body {
-  display: inline-block;
-  text-align: left !important;
-  margin: 0;
-  color: var(--black);
-  width: 100%;
-}
-
-.ci-setting-body-content {
-  float: left;
-  text-align: left !important;
-  margin: 0;
-  color: black;
-  width: 503px;
-}
 
 .acsAppNavUL {
   float: left;
@@ -449,8 +480,8 @@ body {
 .setting-app-pay-symbol {
   color: var(--white);
   padding: 3px;
-  border-radius: range(05);
   font-size: 12px;
+  @include border-radius(5px)
 }
 
 .unpaid {
@@ -477,27 +508,26 @@ body {
 }
 
 #setting-app-content-help::-webkit-scrollbar-corner {
-  border-radius: 5px;
-  -webkit-border-radius: 5px;
+  @include border-radius(5px);
 }
 
 /* Track */
 #setting-app-content-help::-webkit-scrollbar-track {
-  box-shadow: inset 0 0 range(05) var(--grey);
-  border-radius: var(--red);
+  box-shadow: inset 0 0 05 var(--grey);
+  @include border-radius(10px)
 }
 
 /* Handle */
 #setting-app-content-help::-webkit-scrollbar-thumb {
   background-color: var(--red);
-  border-radius: range(10);
+  @include border-radius(10px)
 }
 
 .bottom-notification {
   bottom: 14px;
   right: 40px;
   position: fixed;
-  width: range(700);
+  width: 700px;
   height: 65px;
   text-align: justify;
   background-color: var(--white);

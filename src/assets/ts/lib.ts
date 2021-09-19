@@ -43,9 +43,9 @@ export function assignAttributes(element: HTMLElement, attributes: any) {
         for (let attr in attributes) {
             if (attr === 'text') {
                 element.innerText = attributes[attr]
-            } else if (attr === 'html') {
+            } /*else if (attr === 'html') {
                 element.innerHTML = attributes[attr]
-            } else if (attr === 'child') {
+            }*/ else if (attr === 'child') {
                 if (attributes[attr].length !== 0){
                     //createElement('div', {attr:v, attr:v, child:['div':[{'att':1}]]})
                     for (let child in attributes[attr]){

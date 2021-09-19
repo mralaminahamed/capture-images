@@ -1,91 +1,102 @@
-@function range($px_size) {
-  @return ($px_size/16)+rem;
-}
+@use "sass:string";
+
+//@function range($px_size) {
+//  @return ($px_size/16)+rem;
+//}
 
 @function color($color, $alpha) {
-  @if($color == 'black') {
-    @return rgba(0,0,0, $alpha);
-  }
-  @else if($color == 'navy') {
-    @return rgba(0,0,128, $alpha);
-  }
-  @else if($color == 'blue') {
-    @return rgba(0,0,255, $alpha);
-  }
-  @else if($color == 'green') {
-    @return rgba(0,128,0, $alpha);
-  }
-  @else if($color == 'teal') {
-    @return rgba(0,128,128, $alpha);
-  }
-  @else if($color == 'lime') {
-    @return rgba(0,255,0, $alpha);
-  }
-  @else if($color == 'aqua') {
-    @return rgba(0,255,255, $alpha);
-  }
-  @else if($color == 'maroon') {
-    @return rgba(128,0,0, $alpha);
-  }
-  @else if($color == 'purple') {
-    @return rgba(128,0,128, $alpha);
-  }
-  @else if($color == 'olive') {
-    @return rgba(128,128,0, $alpha);
-  }
-  @else if($color == 'gray') {
-    @return rgba(128,128,128, $alpha);
-  }
-  @else if($color == 'silver') {
-    @return rgba(192,192,192, $alpha);
-  }
-  @else if($color == 'red') {
-    @return rgba(255,0,0, $alpha);
-  }
-  @else if($color == 'fuchsia') {
-    @return rgba(255,0,255, $alpha);
-  }
-  @else if($color == 'yellow') {
-    @return rgba(255,255,0, $alpha);
-  }
-  @else {
-    @return rgba(255,255,255, $alpha);
+  @if ($color == 'black') {
+    @return rgba(0, 0, 0, $alpha);
+  } @else if ($color == 'navy') {
+    @return rgba(0, 0, 128, $alpha);
+  } @else if ($color == 'blue') {
+    @return rgba(0, 0, 255, $alpha);
+  } @else if ($color == 'green') {
+    @return rgba(0, 128, 0, $alpha);
+  } @else if ($color == 'teal') {
+    @return rgba(0, 128, 128, $alpha);
+  } @else if ($color == 'lime') {
+    @return rgba(0, 255, 0, $alpha);
+  } @else if ($color == 'aqua') {
+    @return rgba(0, 255, 255, $alpha);
+  } @else if ($color == 'maroon') {
+    @return rgba(128, 0, 0, $alpha);
+  } @else if ($color == 'purple') {
+    @return rgba(128, 0, 128, $alpha);
+  } @else if ($color == 'olive') {
+    @return rgba(128, 128, 0, $alpha);
+  } @else if ($color == 'gray') {
+    @return rgba(128, 128, 128, $alpha);
+  } @else if ($color == 'silver') {
+    @return rgba(192, 192, 192, $alpha);
+  } @else if ($color == 'red') {
+    @return rgba(255, 0, 0, $alpha);
+  } @else if ($color == 'fuchsia') {
+    @return rgba(255, 0, 255, $alpha);
+  } @else if ($color == 'yellow') {
+    @return rgba(255, 255, 0, $alpha);
+  } @else {
+    @return rgba(255, 255, 255, $alpha);
   }
 
 }
 
 @mixin prefix($property, $value, $prefixes) {
   @each $prefix in $prefixes {
-    -#{$prefix}-#{$property}: $value;
+    @include makePropertyValue('-#{$prefix}-', $property, $value);
   }
-  #{$property}: $value;
+  @include makePropertyValue('', $property, $value);
 }
+
+@mixin makePropertyValue($prefix, $property, $value) {
+  @if type-of($value) == string {
+    #{$prefix}#{$property} : string.unquote($value);
+  } @else {
+    #{$prefix}#{$property} : $value;
+  }
+}
+
 
 //@include prefix(filter, grayscale(50%), moz webkit);
 
-@mixin box-shadow($h-offset, $v-offset, $blur, $spread, $color, $position){
- // @include prefix(box-shadow, $h-offset $v-offset $blur $spread $color $position, moz webkit);
+@mixin box-shadow($h-offset, $v-offset, $blur, $spread, $color, $position) {
+  // @include prefix(box-shadow, $h-offset $v-offset $blur $spread $color $position, moz webkit);
   -webkit-box-shadow: $position $h-offset $v-offset $blur $color;
   -moz-box-shadow: $position $h-offset $v-offset $blur $color;
   box-shadow: $position $h-offset $v-offset $blur $color;
 }
 
-@mixin box-shadow-plain($pain-text){
+@mixin box-shadow-plain($pain-text) {
   @include prefix(box-shadow, $pain-text, moz webkit);
 }
 
-@mixin border-radius($length){
+@mixin border-radius($length) {
   @include prefix(border-radius, $length, moz webkit);
 }
 
-@mixin transition($property, $time, $function){
+@mixin transition($property, $time, $function) {
   @include prefix(transition, $property $time $function, o moz webkit);
 }
 
-@mixin user-select($value){
+@mixin user-select($value) {
   @include prefix(user-select, $value, ms webkit);
 }
 
+@mixin flex-direction($value) {
+  @include prefix(flex-direction, $value, khtml o ms moz webkit);
+}
+
+@mixin justify-content($value) {
+  @include prefix(justify-content, $value, khtml o ms webkit);
+}
+
+@mixin align-items($value) {
+  @include prefix(align-items, $value, khtml o ms moz webkit);
+}
+
+@mixin box-sizing ($value){
+  @include prefix(box-sizing, $value, moz webkit);
+}
 
 
 //Animations

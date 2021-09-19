@@ -6,24 +6,68 @@
     <link rel="stylesheet" href="./src/assets/sass/app.css">
 </head>
 <body>
-<div id="ci-window" class="ci-window">
-    <article id="ci-window-body" class="ci-window-body">
+<div id="ci" class="ci-window">
+    <article id="ci-window" class="ci-window-body">
         <header id="ci-header" class="ci-header">
-            <img src="src/assets/images/image.svg" width="40" height="40" alt="logo">
-            <h2>Capture Images</h2>
+            <img class="ci-logo" src="src/assets/images/image.svg" width="40" height="40" alt="logo">
+            <h2 class="ci-title">Capture Images</h2>
             <p class="ci-close">X</p>
         </header>
-        <section id="ci-body" class="ci-container">
-            A quick brown fox jumps over the lazy dog.
-            A quick brown fox jumps over the lazy dog.
-            A quick brown fox jumps over the lazy dog.
-            A quick brown fox jumps over the lazy dog.
-        </section>
+        <section id="ci-container" class="ci-container"></section>
         <footer id="ci-footer" class="ci-footer">
             2021@Al-Amin Ahamed
         </footer>
     </article>
 </div>
+
+<script>
+
+    let images = document.images;
+    let imageNodeList = [];
+    let div, icon, img;
+    if(images.length > 0){
+        for (let i = 0; i < images.length; i++) {
+            const image_width_actual = images[i].naturalWidth;
+            const image_height_actual = images[i].naturalHeight;
+
+            const image_width_rendered = images[i].width;
+            const image_height_rendered = images[i].height;
+
+            console.log(images.length)
+            console.log(images[i])
+
+            console.log(image_width_actual)
+            console.log(image_height_actual)
+            console.log(image_width_rendered)
+            console.log(image_height_rendered)
+
+            div = document.createElement('div')
+            icon = document.createElement('span')
+            img = document.createElement('img');
+
+
+            div.setAttribute('id', i.toString())
+            div.setAttribute('class', 'ci-box-shadow')
+            icon.textContent = '+'
+
+            img.setAttribute('alt', i.toString() + '#img')
+            img.setAttribute('src', images[i].src)
+            img.setAttribute('width', '150')
+            img.setAttribute('height', '150')
+
+            div.appendChild(icon)
+            div.appendChild(img)
+
+            imageNodeList[i] = div;
+        }
+
+        console.log(imageNodeList)
+
+        for (let j = 0; j < imageNodeList.length; j++) {
+            document.querySelector('#ci-container').appendChild(imageNodeList[j])
+        }
+    }
+</script>
 <!--<script src="./dist-firefox/assets/js/ui.js"></script>-->
 </body>
 </html>

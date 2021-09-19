@@ -9,39 +9,87 @@
 import {browser} from "webextension-polyfill-ts";
 import {
     assignAttributes,
-    captureElement,
-    createElement
+    captureElement
 } from "./lib";
-import {app} from "./db";
+import {UI} from "./ui";
 //let images :any = [];
 
-browser.runtime.onMessage.addListener(request => {
-    console.log("Message from the background script:");
-    console.log(request);
-    return Promise.resolve({response: "Hi from content script"});
-});
+// browser.runtime.onMessage.addListener(request => {
+//     console.log("Message from the background script:");
+//     console.log(request);
+//     return Promise.resolve({response: "Hi from content script"});
+// });
+
+
+UI.make();
 
 
 browser.runtime.onMessage.addListener(
     (request, sender):any => {
         console.log(request)
         console.log(sender)
-        addAppWindow();
         if (request.session === "makePopUp") {
             if (document.readyState === 'complete'){
+                if (captureElement('#ci') === undefined){
+                    UI.make();
+                }
+
                 //Add ui components for application
+                //Application body
+                assignAttributes(captureElement('#ci-window'), {class:'ci-window-body'});
+
+                //Header
                 assignAttributes(captureElement('#ci-header'), {class:'ci-header'});
-                assignAttributes(captureElement('#ci-logo'), {src:request.logo, class:'ci-logo', alt:'capture image official logo'});
+                assignAttributes(captureElement('#ci-logo'), {src:request.logo, class:'ci-logo', alt:'capture image official logo',width:40, height:40});
                 assignAttributes(captureElement('#ci-title'), {text:request.title, class:'ci-title', title:'Capture Images'});
                 assignAttributes(captureElement('#ci-close'), {text:'x', class:'ci-close', title:'Click to close'});
 
+                //Container
+                assignAttributes(captureElement('#ci-container'), {class:'ci-container'});
+                //Footer
+                assignAttributes(captureElement('#ci-footer'), {class:'ci-footer', text:(new Date()).getFullYear() + '@ CI Author'});
 
 
-                captureElement('#ci-window').style.display = 'block';
-                if (document.querySelectorAll('img').length !==0){
-                    document.querySelectorAll('img').forEach(function (img) {
-                        console.log(img);
-                    });
+
+                //make display block
+                captureElement('#ci').style.display = 'block';
+
+                //crawling images
+                let images = document.images;
+                let imageNodeList = [];
+                let item, img;
+                if(images.length > 0){
+                    for (let i = 0; i < images.length; i++) {
+                        // const image_width_actual = images[i].naturalWidth;
+                        // const image_height_actual = images[i].naturalHeight;
+                        //
+                        // const image_width_rendered = images[i].width;
+                        // const image_height_rendered = images[i].height;
+
+                        item = document.createElement('a')
+                        img = document.createElement('img');
+
+                        item.setAttribute('href', images[i].src)
+                        item.setAttribute('download', 'download')
+                        item.addEventListener('click', function (e) {
+                            e.preventDefault();
+                            download(this.href);
+                        });
+
+                        img.setAttribute('alt', i.toString() + '#img')
+                        img.setAttribute('src', images[i].src)
+                        img.setAttribute('width', '150')
+                        img.setAttribute('height', '150')
+
+                        //div.appendChild(icon)
+                        item.appendChild(img)
+
+                        imageNodeList[i] = item;
+                    }
+
+                    for (let j = 0; j < imageNodeList.length; j++) {
+                        document.querySelector('#ci-container')?.appendChild(imageNodeList[j])
+                    }
                 }
                 //alert(request);
 
@@ -78,22 +126,22 @@ browser.runtime.onMessage.addListener(
               //       window.location.reload();
               //   }
 
-                (function () {
-                    let coll = document.getElementsByClassName("coll-image");
-                    let i;
-                    for (i = 0; i < coll.length; i++) {
-                        coll[i].addEventListener("click", function () {
-                            //console.log(this);
-                            const a = document.createElement("a");
-                            a.style.display = "none";
-                            document.body.appendChild(a);
-                            a.setAttribute("download", '');
-                            a.href = this.src;
-                            a.click();
-                            document.body.removeChild(a);
-                        });
-                    }
-                }());
+                // (function () {
+                //     let coll = document.getElementsByClassName("coll-image");
+                //     let i;
+                //     for (i = 0; i < coll.length; i++) {
+                //         coll[i].addEventListener("click", function () {
+                //             //console.log(this);
+                //             const a = document.createElement("a");
+                //             a.style.display = "none";
+                //             document.body.appendChild(a);
+                //             a.setAttribute("download", '');
+                //             a.href = this.src;
+                //             a.click();
+                //             document.body.removeChild(a);
+                //         });
+                //     }
+                // }());
                 return Promise.resolve('downloaded');
             } else {
                 alert('Please  until page load complete.')
@@ -102,140 +150,23 @@ browser.runtime.onMessage.addListener(
     }
 );
 
-if (document.querySelector('#ci-window')){
-    console.log(document.querySelector('#ci-window'))
-}
+function download(url: any) {
+    fetch(url)
+        .then(res => res.blob()) // Gets the response and returns it as a blob
+        .then(blob => {
+            // Here's where you get access to the blob
+            // And you can use it for whatever you want
+            // Like calling ref().put(blob)
 
-/*@ts-ignore*/
-function addAppWindow(): any {
-    let appWindow: any = createElement(
-        'div', {
-            'id': 'app-window', 'class': 'app-window', 'style': 'display:none;'
-    });
-    let appBody: any = createElement( 'div', {
-        'id': 'app-window-body', 'class': 'row app-window-body animate'
-    });
-    appWindow.appendChild(appBody);
-
-    let appTitleBar: any = createElement('div', {'class': 'appTitleBar'});
-    let appTitleText: any = createElement('div', {'class': 'appTitleText'});
-    appTitleText.textContent = app.about.name_spaced;
-    appTitleBar.appendChild(appTitleText);
-    let appSearchBox:any = createElement('input', {'id':'image-search-box', 'class':'app-search-box', 'type':'search', 'placeholder':'Search any images'});
-    appTitleBar.appendChild(appSearchBox);
-
-    let appTitleSymbol: any = createElement('div', {'id': 'app-close-button', 'class': 'appTitleSymbol'});
-    appTitleSymbol.textContent = 'x';
-    appTitleBar.appendChild(appTitleSymbol);
-    appBody.appendChild(appTitleBar);
-
-
-    /*navigators content*/
-    if (captureElement('app-window') === null || captureElement('app-window') === undefined) {
-        /*console.info('setting window added')*/
-        document.body.insertBefore(appWindow, document.body.lastElementChild);
-    }
-
-    return globalEventControllers('app-setting-window');
-}
-
-async function globalEventControllers(component: string) {
-    if (component == 'app-setting-window') {
-        /*console.log('set event for app-setting-button action');*/
-
-
-        // console.log('set event for app-setting-opener action');
-        // console.log(document.querySelector('#app-setting-button'));
-        //captureElement('#app-setting-button')?.addEventListener('click', function () {
-            /*console.info('preparing to send data request');*/
-            /*console.info('send data request');*/
-       // });
-
-
-        // console.log('set event for app-close-button action');
-        // console.log(captureElement('-app-close-button'));
-        captureElement('#ci-close').addEventListener('click', function () {
-            captureElement('#ci-window').style.display = 'none';
+            // Here, I use it to make an image appear on the page
+            let objectURL = URL.createObjectURL(blob);
+            let myImage = new Image();
+            myImage.src = objectURL;
+            myImage.alt = 'download';
+            myImage.style.display = 'none';
+            myImage.setAttribute('download', 'download');
+            document.body.appendChild(myImage)
+            myImage.click();
+            myImage.remove();
         });
-
-        // console.log('set event for setting-get-a-licence action');
-        // console.log(captureElement('setting-get-a-licence'));
-
-        /*console.log('set event for nav action');*/
-        /*console.log(captureElement('acsAppNavUL'));*/
-        captureElement('.appNavUL').childNodes.forEach(function (element: HTMLElement) {
-            const content = (element.id).substr(((element.id).indexOf('nav-') + "nav-".length), (element.id).length);
-            element.addEventListener('click', function () {
-                // const parentNavigatorId = element.id;
-                // console.log(element.id)
-                // console.log(content)
-                if (content) {
-                    captureElement('.setting-app-body-content').childNodes.forEach(function (element: HTMLElement) {
-                        /*console.log(element)*/
-                        if (element.id !== 'setting-app-content-' + content) {
-                            /*captureElement(parentNavigatorId).removeAttribute('style');*/
-                            element.style.display = 'none';
-                            // console.log(element)
-                            // console.log(captureElement(parentNavigatorId))
-                        } else {
-                            if (element.style.display === 'none') {
-                                element.style.display = 'block';
-                                // captureElement(parentNavigatorId).setAttribute('style','background-color: #9932CC;cursor: pointer;');
-                                // console.log(element)
-                                // console.log(captureElement(parentNavigatorId))
-                            }
-                        }
-                    });
-                }
-            })
-        });
-
-        /*console.log(captureElement('app-setting-window'));*/
-        /*console.log('completed');*/
-    }
-}
-
-
-/*@ts-ignore*/
-function assembleUI() {
-    /* attach external css file*/
-    // let app_css_file = document.createElement('link');
-    // app_css_file.setAttribute('type','text/css');
-    // app_css_file.setAttribute('rel','stylesheet');
-    // app_css_file.setAttribute('href',browser.runtime.getURL('assets/css/app.css'));
-    // document.getElementsByTagName('head')[0].appendChild(app_css_file);
-
-    let app_image_window = document.createElement('div');
-    app_image_window.setAttribute('id', 'captured-images-viewer');
-    app_image_window.setAttribute('class', 'modal');
-
-    let app_image_modal_content = document.createElement('div');
-    app_image_modal_content.setAttribute('class', 'modal-content');
-
-    let app_image_modal_header = document.createElement('div');
-    app_image_modal_header.setAttribute('class', 'modal-header');
-
-    let app_image_modal_header_span = document.createElement('span');
-    app_image_modal_header_span.setAttribute('id', 'viewer-close');
-    app_image_modal_header_span.setAttribute('class', 'close');
-    app_image_modal_header_span.textContent = 'x';
-    app_image_modal_header.appendChild(app_image_modal_header_span);
-
-    let app_image_modal_header_h2 =  document.createElement('h2');
-    app_image_modal_header_h2.textContent = 'Capture Images';
-    app_image_modal_header.appendChild(app_image_modal_header_h2);
-    app_image_modal_content.appendChild(app_image_modal_header);
-
-    let app_image_modal_body = document.createElement('div');
-    app_image_modal_body.setAttribute('class', 'modal-body');
-
-    let app_image_modal_body_p = document.createElement('p');
-    app_image_modal_body.appendChild(app_image_modal_body_p);
-
-    let app_image_modal_body_div = document.createElement('div');
-    app_image_modal_body_div.setAttribute('id', 'images-div');
-    app_image_modal_body.appendChild(app_image_modal_body_div);
-    app_image_modal_content.appendChild(app_image_modal_body);
-    app_image_window.appendChild(app_image_modal_content);
-    document.body.appendChild(app_image_window);
 }
