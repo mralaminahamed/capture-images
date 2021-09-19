@@ -60,7 +60,7 @@
     {
       "matches": ["<all_urls>"],
       "js": ["assets/js/ui.js","assets/js/content.js"],
-      "css": ["assets/css/app.css"],
+      "css": ["assets/css/ui.css"],
       "all_frames": true
     }
   ]
