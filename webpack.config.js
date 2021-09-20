@@ -80,7 +80,8 @@ const commonConfig = {
         new ImageminPlugin({ test: /\.(jpe?g|png|gif|svg)$/i }),
     ],
     stats: {
-        children: true
+        children: true,
+        errorDetails: true
     }
 }
 
