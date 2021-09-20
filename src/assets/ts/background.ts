@@ -5,24 +5,24 @@
 * Official Link: https://github.com/mralaminahamed/capture-images
 * */
 //External dependencies
-import {browser} from "webextension-polyfill-ts";
+import {runtime, storage, contextMenus, browserAction} from "webextension-polyfill";
 //Internal dependencies
 import {createCaptureImageContextMenu, handleUpdateAvailable, sendCaptureImagesRequest} from "./lib.background";
 
 
 /*add context menu*/
-browser.runtime.onInstalled.addListener(createCaptureImageContextMenu);
+runtime.onInstalled.addListener(createCaptureImageContextMenu);
 
-//
-browser.storage.onChanged.addListener(() => {});
+//storage change event
+storage.onChanged.addListener(() => {});
 
 //capture event on click context menu
-browser.contextMenus.onClicked.addListener(sendCaptureImagesRequest);
+contextMenus.onClicked.addListener(sendCaptureImagesRequest);
 //capture event on click action button
-browser.browserAction.onClicked.addListener(sendCaptureImagesRequest);
+browserAction.onClicked.addListener(sendCaptureImagesRequest);
 
 //make update
-browser.runtime.onUpdateAvailable.addListener(handleUpdateAvailable);
+runtime.onUpdateAvailable.addListener(handleUpdateAvailable);
 
 
 

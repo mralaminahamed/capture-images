@@ -5,7 +5,7 @@ const path = require('path');
 const ImageminPlugin = require('imagemin-webpack-plugin').default;
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const WebExtWebpackPlugin = require('web-ext-webpack-plugin');
+const WebExtWebpackPlugin = require('web-ext-plugin');
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const RemoveEmptyScriptsPlugin = require('webpack-remove-empty-scripts')
 
@@ -79,6 +79,9 @@ const commonConfig = {
         }),
         new ImageminPlugin({ test: /\.(jpe?g|png|gif|svg)$/i }),
     ],
+    stats: {
+        children: true
+    }
 }
 
 const commonExtConfig = {

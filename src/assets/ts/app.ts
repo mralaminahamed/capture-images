@@ -6,7 +6,7 @@
 * */
 
 
-import {browser} from "webextension-polyfill-ts";
+import {runtime} from "webextension-polyfill";
 import {
     assignAttributes,
     captureElement
@@ -17,8 +17,10 @@ import FileSaver from "file-saver";
 
 UI.make();
 
-browser.runtime.onMessage.addListener(
+runtime.onMessage.addListener(
     (request, sender):any => {
+        console.log(request)
+        console.log(sender)
         if (request.session === "makePopUp") {
             if (document.readyState === 'complete'){
                 if (captureElement('#ci') === undefined){

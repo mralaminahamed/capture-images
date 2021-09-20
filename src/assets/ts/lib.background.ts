@@ -25,7 +25,7 @@ export function sendCaptureImagesRequest(e:any) {
 
 //upgrade add-on on available
 export function handleUpdateAvailable(details:any) {
-    //console.log(details);
+    console.log(details);
     //console.log(details.version);
     // Proceed to upgrade the add-on
     browser.runtime.reload();
