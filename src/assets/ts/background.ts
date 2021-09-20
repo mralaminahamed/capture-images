@@ -21,9 +21,9 @@ export function createCaptureImageContextMenu() {
 
 export function sendCaptureImagesRequest(e:any) {
     console.log(e)
-    tabs.query({active: true, currentWindow: true}).then(function(tabs:any) {
+    tabs.query({active: true, currentWindow: true}).then(function(tabsQ:any) {
         //console.log(tabs);
-        tabs.sendMessage(tabs[0].id, {
+        tabs.sendMessage(tabsQ[0].id, {
             session: 'makePopUp',
             logo: runtime.getURL('assets/images/image.svg'),
             title: runtime.getManifest().name,

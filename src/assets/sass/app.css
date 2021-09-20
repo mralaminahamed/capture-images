@@ -38,6 +38,7 @@ html:root {
 .ci-window * {
   margin: 0;
   padding: 0;
+  line-height: 1;
 }
 
 body {
@@ -319,6 +320,10 @@ body {
 .ci-container div span {
   text-align: end;
   margin-bottom: -20px;
+}
+.ci-container div img {
+  width: 120px;
+  height: 150px;
 }
 .ci-footer {
   font-family: var(--font-family-sans-serif);

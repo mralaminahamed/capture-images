@@ -17,6 +17,34 @@ import FileSaver from "file-saver";
 
 UI.make();
 
+
+//crawling images
+let images = document.images;
+let imageNodeList: any[] = [];
+let item, img;
+if(images.length > 0){
+    for (let i = 0; i < images.length; i++) {
+        if (images[i].src.length > 0){
+            item = document.createElement('div')
+            img = document.createElement('img');
+
+            img.setAttribute('alt', i.toString() + '#img')
+            img.setAttribute('src', images[i].src)
+            img.setAttribute('width', '140')
+            img.setAttribute('height', '150')
+            img.addEventListener('click',function (event) {
+                event.preventDefault();
+                FileSaver.saveAs(this.src);
+            })
+
+            //div.appendChild(icon)
+            item.appendChild(img)
+            imageNodeList[i] = item;
+        }
+    }
+}
+
+
 runtime.onMessage.addListener(
     (request, sender):any => {
         console.log(request)
@@ -50,29 +78,8 @@ runtime.onMessage.addListener(
                 document.querySelector('#ci')?.addEventListener('scroll', function (e) {
                     captureElement('#ci-window').style.top = '70px';
                 })
-                //crawling images
-                let images = document.images;
-                let imageNodeList = [];
-                let item, img;
-                if(images.length > 0){
-                    for (let i = 0; i < images.length; i++) {
-                        item = document.createElement('div')
-                        img = document.createElement('img');
 
-                        img.setAttribute('alt', i.toString() + '#img')
-                        img.setAttribute('src', images[i].src)
-                        img.setAttribute('width', '150')
-                        img.setAttribute('height', '150')
-                        img.addEventListener('click',function (event) {
-                            event.preventDefault();
-                            FileSaver.saveAs(this.src);
-                        })
-
-                        //div.appendChild(icon)
-                        item.appendChild(img)
-                        imageNodeList[i] = item;
-                    }
-
+                if(document.images.length > 0){
                     for (let j = 0; j < imageNodeList.length; j++) {
                         document.querySelector('#ci-container')?.appendChild(imageNodeList[j])
                     }
