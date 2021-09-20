@@ -12,38 +12,13 @@ import {
     captureElement
 } from "./lib";
 import {UI} from "./ui";
-import FileSaver from "file-saver";
+import {crawlImages} from "./crawler";
 
 
 UI.make();
 
-
 //crawling images
-let images = document.images;
-let imageNodeList: any[] = [];
-let item, img;
-if(images.length > 0){
-    for (let i = 0; i < images.length; i++) {
-        if (images[i].src.length > 0){
-            item = document.createElement('div')
-            img = document.createElement('img');
-
-            img.setAttribute('alt', i.toString() + '#img')
-            img.setAttribute('src', images[i].src)
-            img.setAttribute('width', '140')
-            img.setAttribute('height', '150')
-            img.addEventListener('click',function (event) {
-                event.preventDefault();
-                FileSaver.saveAs(this.src);
-            })
-
-            //div.appendChild(icon)
-            item.appendChild(img)
-            imageNodeList[i] = item;
-        }
-    }
-}
-
+let imageNodeList: any[] = crawlImages();
 
 runtime.onMessage.addListener(
     (request, sender):any => {
@@ -61,7 +36,7 @@ runtime.onMessage.addListener(
 
                 //Header
                 assignAttributes(captureElement('#ci-header'), {class:'ci-header'});
-                assignAttributes(captureElement('#ci-logo'), {src:request.logo, class:'ci-logo', alt:'capture image official logo',width:40, height:40});
+                assignAttributes(captureElement('#ci-logo'), {src:request.logo, class:'ci-logo', alt:'capture image official logo',width:40, height:40, loading:'lazy'});
                 assignAttributes(captureElement('#ci-title'), {text:request.title, class:'ci-title', title:'Capture Images'});
                 assignAttributes(captureElement('#ci-close'), {text:'x', class:'ci-close', title:'Click to close'});
 
