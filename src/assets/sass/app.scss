@@ -233,15 +233,21 @@ body {
   &-close {
     position: absolute;
     right: 20px;
-    font-size: 10px;
+    font-size: 15px;
     font-weight: bold;
     text-align: center;
     border: 2px solid var(--red);
     width: 14px;
-    padding: 2px;
+    height: 14px;
+    padding: 2px 3px 5px;
     background-color: var(--white);
     color: var(--red);
     cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
     @include border-radius(50%);
     @include user-select(none);
     @include box-sizing(content-box);
