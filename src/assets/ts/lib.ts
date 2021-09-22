@@ -46,4 +46,11 @@ export function captureElement(selectors: string): any {
     }
 }
 
+
+export function captureElementList(selectors: string): any {
+    if (document.querySelectorAll(selectors) !== null) {
+        return document.querySelectorAll(selectors) as NodeList;
+    }
+}
+
 /*required functions*/
