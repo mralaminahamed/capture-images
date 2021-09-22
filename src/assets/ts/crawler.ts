@@ -1,9 +1,10 @@
 import FileSaver from "file-saver";
-import {createElement} from "./lib";
+import {captureElementList, createElement} from "./lib";
 
 export function crawlImages() {
     //crawling images
-    let images = document.images;
+    //let images = document.images;
+    let images = captureElementList('img');
     let imageNodeList: any[] = [];
     let item, img;
     if(images.length > 0){
