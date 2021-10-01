@@ -11,7 +11,10 @@
     "pretty": true,
     "sourceMap": true,
     "strictNullChecks": true,
-    "lib": ["DOM"],
+    "lib": [
+      "DOM",
+      "es2015.collection"
+    ],
     "target": "esNext",
     "typeRoots": ["node_modules/@types","node_modules/web-ext-types"/*,"src/common.d.ts"*/]
   },
