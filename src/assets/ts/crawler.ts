@@ -1,33 +1,28 @@
 import FileSaver from "file-saver";
-import {captureElementList, createElement} from "./lib";
+import {createElement} from "./lib";
 
-export function crawlImages() {
-    //crawling images
-    //let images = document.images;
-    let images = captureElementList('img');
-    let imageNodeList: any[] = [];
-    let item, img;
-    if(images.length > 0){
-        for (let i = 0; i < images.length; i++) {
-            if (images[i].src.length > 0){
-                item = createElement('div', {id:i.toString()});
-                img = document.createElement('img');
 
-                img.setAttribute('alt', i.toString() + '#img')
-                img.setAttribute('src', images[i].src)
-                img.setAttribute('width', '140')
-                img.setAttribute('height', '150')
-                img.addEventListener('click',function (event) {
-                    event.preventDefault();
-                    FileSaver.saveAs(this.src);
-                })
+export function makeView(image:HTMLImageElement) : Node {
+    let item, img, i = 1;
 
-                //div.appendChild(icon)
-                item.appendChild(img)
-                imageNodeList[i] = item;
-            }
-        }
+    item = createElement('div', {});
+    if (image.src.length > 0){
+        i +=1
+        item.setAttribute('id',i.toString());
+        img = document.createElement('img');
+
+        img.setAttribute('alt', i.toString() + '#img')
+        img.setAttribute('src', image.src)
+        img.setAttribute('width', '140')
+        img.setAttribute('height', '150')
+        img.addEventListener('click',function (event) {
+            event.preventDefault();
+            FileSaver.saveAs(this.src);
+        })
+
+        //div.appendChild(icon)
+        item.appendChild(img)
     }
 
-    return imageNodeList;
+    return item;
 }
