@@ -9,3 +9,4 @@
 *.lock
 *-lock.json
 .yarn/releases/yarn-stable-temp.cjs
+.yarn/install-state.gz
