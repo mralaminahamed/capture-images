@@ -8,3 +8,4 @@
 # files
 *.lock
 *-lock.json
+.yarn/releases/yarn-stable-temp.cjs
